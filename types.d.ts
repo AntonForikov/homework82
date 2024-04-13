@@ -1,5 +1,6 @@
-export interface Links {
+export interface ArtistFromDB {
   _id: string,
-  shortUrl: string,
-  originalUrl: string
+  name: string | null,
+  information: string | null,
+  image: string | null
 }

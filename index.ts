@@ -1,5 +1,5 @@
 import express from 'express';
-import shorterRouter from './routes/shorter';
+import artistRouter from './routes/artist';
 import mongoose from 'mongoose';
 import config from './config';
 
@@ -7,7 +7,8 @@ const app = express();
 const port = 8000;
 
 app.use(express.json());
-app.use('/links', shorterRouter);
+app.use(express.static('public'));
+app.use('/artists', artistRouter);
 
 const run = async () => {
   await mongoose.connect(config.mongoose.db);
