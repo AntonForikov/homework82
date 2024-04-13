@@ -1,7 +1,7 @@
 import express from 'express';
 import {imagesUpload} from '../multer';
 import Album from '../models/album';
-import {AlbumWithoutId} from '../types';
+import {AlbumFromDB, AlbumWithoutId} from '../types';
 import mongoose from 'mongoose';
 import {ObjectId} from 'mongodb';
 
@@ -39,7 +39,7 @@ albumRouter.get('/', async (req, res, next) => {
   //       return res.status(404).send({error: 'Artist query is not ObjectId.'})
   //     }
   //
-  //     const albums = await Album.find({artist: _id});
+  //     const albums: AlbumFromDB[] = await Album.find({artist: _id});
   //     return res.send(albums);
   //   } catch (e) {
   //     next(e);
@@ -47,7 +47,7 @@ albumRouter.get('/', async (req, res, next) => {
   // }
 
   try {
-    const albums = await Album.find();
+    const albums: AlbumFromDB[] = await Album.find();
     return res.send(albums);
   } catch (e) {
     next(e);

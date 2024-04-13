@@ -12,7 +12,16 @@ export interface AlbumFromDB {
   title: string;
   artist: string;
   year: string;
-  image: string | null
+  image: string | null;
 }
 
 export type AlbumWithoutId = Omit<AlbumFromDB, '_id'>;
+
+export interface TrackFromDb {
+  _id: string;
+  title: string;
+  album: string;
+  duration: string | null;
+}
+
+export type TrackWithoutId = Omit<TrackFromDb, '_id'>
