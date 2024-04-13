@@ -9,10 +9,12 @@ const trackRouter = express.Router();
 trackRouter.post('/', async (req, res, next) => {
   try {
     const {title, album, duration} = req.body;
+
+
     const trackData: TrackWithoutId = {
       title: title,
       album: album,
-      duration: duration && duration.trim() !== '' ? duration.trim() : null
+      duration: duration
     }
 
     const track = new Track(trackData);
@@ -21,6 +23,7 @@ trackRouter.post('/', async (req, res, next) => {
     return res.send(track);
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) return res.status(422).send(e);
+    if (e instanceof mongoose.Error) return res.status(422).send(e);
     next(e);
   }
 });

@@ -16,7 +16,10 @@ const TrackSchema = new Schema({
       message: 'Album does not exist'
     }
   },
-  duration: String || null
+  duration: {
+    type: String,
+    required: true
+  }
 }, {versionKey: false});
 
 const Track = model('tracks', TrackSchema);
