@@ -14,9 +14,9 @@ const TrackSchema = new Schema({
     validate: {
       validator: async (id: ObjectId) => Album.findById(id),
       message: 'Album does not exist'
-    },
-    duration: String
-  }
+    }
+  },
+  duration: String || null
 }, {versionKey: false});
 
 const Track = model('tracks', TrackSchema);

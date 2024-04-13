@@ -1,5 +1,4 @@
 import express from 'express';
-import Album from '../models/album';
 import {TrackFromDb, TrackWithoutId} from '../types';
 import mongoose from 'mongoose';
 import {ObjectId} from 'mongodb';
@@ -13,7 +12,7 @@ trackRouter.post('/', async (req, res, next) => {
     const trackData: TrackWithoutId = {
       title: title,
       album: album,
-      duration: duration ? duration : null
+      duration: duration && duration.trim() !== '' ? duration.trim() : null
     }
 
     const track = new Track(trackData);
@@ -27,26 +26,27 @@ trackRouter.post('/', async (req, res, next) => {
 });
 
 trackRouter.get('/', async (req, res, next) => {
-  // const artistId = req.query.artist;
+  const albumId = req.query.album;
 
-  // if(artistId) {
-  //   try {
-  //     let _id: ObjectId;
-  //     try {
-  //       _id = new ObjectId(artistId);
-  //     } catch {
-  //       return res.status(404).send({error: 'Artist query is not ObjectId.'})
-  //     }
-  //
-  //     const albums: AlbumFromDB[] = await Album.find({artist: _id});
-  //     return res.send(albums);
-  //   } catch (e) {
-  //     next(e);
-  //   }
-  // }
+  if(albumId && typeof (albumId) === 'string') {
+    try {
+      let _id: ObjectId;
+      try {
+        _id = new ObjectId(albumId);
+      } catch {
+        return res.status(404).send({error: 'Album query is not an ObjectId.'});
+      }
+
+      const tracks: TrackFromDb[] = await Track.find({album: _id});
+      if (tracks.length === 0) return res.status(404).send({error: 'There is no tracks with such album.'});
+      return res.send(tracks);
+    } catch (e) {
+      next(e);
+    }
+  }
 
   try {
-    const tracks: TrackFromDb[] = await Album.find();
+    const tracks: TrackFromDb[] = await Track.find();
     return res.send(tracks);
   } catch (e) {
     next(e);

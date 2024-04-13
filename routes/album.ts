@@ -30,21 +30,22 @@ albumRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
 albumRouter.get('/', async (req, res, next) => {
   const artistId = req.query.artist;
 
-  // if(artistId) {
-  //   try {
-  //     let _id: ObjectId;
-  //     try {
-  //       _id = new ObjectId(artistId);
-  //     } catch {
-  //       return res.status(404).send({error: 'Artist query is not ObjectId.'})
-  //     }
-  //
-  //     const albums: AlbumFromDB[] = await Album.find({artist: _id});
-  //     return res.send(albums);
-  //   } catch (e) {
-  //     next(e);
-  //   }
-  // }
+  if(artistId && typeof artistId === 'string') {
+    try {
+      let _id: ObjectId;
+      try {
+        _id = new ObjectId(artistId);
+      } catch {
+        return res.status(404).send({error: 'Artist query is not ObjectId.'});
+      }
+
+      const albums: AlbumFromDB[] = await Album.find({artist: _id});
+      if (albums.length === 0) return res.status(404).send({error: 'There is no albums with such artist.'});
+      return res.send(albums);
+    } catch (e) {
+      next(e);
+    }
+  }
 
   try {
     const albums: AlbumFromDB[] = await Album.find();
@@ -61,7 +62,7 @@ albumRouter.get('/:_id', async (req, res, next) => {
     return res.send(targetAlbum);
   } catch (e) {
     if (e instanceof mongoose.Error.CastError) return res.status(404).send({error: 'No such album'});
-    next(e)
+    next(e);
   }
 });
 
