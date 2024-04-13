@@ -6,9 +6,9 @@ const AlbumSchema = new Schema({
     type: String,
     required: true
   },
-  artist: {
+  artistId: {
     type: Schema.Types.ObjectId,
-    ref: 'Artists',
+    ref: 'artist',
     required: true,
     validate: {
       validator: async (id: Types.ObjectId) => Artist.findById(id),
