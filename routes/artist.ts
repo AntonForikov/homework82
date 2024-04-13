@@ -1,16 +1,15 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import Artist from '../models/artist';
 import {imagesUpload} from '../multer';
-import mongoose from 'mongoose';
-import {ArtistFromDB} from '../types';
-// import {Links} from '../types';
+import {ArtistFromDB, ArtistWithoutId} from '../types';
 
 const artistRouter = express.Router();
 
 artistRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
   try {
     const {name, information} = req.body;
-    const artistData = {
+    const artistData: ArtistWithoutId = {
       name: name,
       information: information ? information : null,
       image: req.file ? req.file.filename : null

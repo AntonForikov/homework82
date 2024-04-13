@@ -5,10 +5,10 @@ const ArtistSchema = new Schema({
     type: String,
     required: true
   },
-  image: String,
-  information: String
+  image: String || null,
+  information: String || null
 }, {versionKey: false});
 
-const Artist = model('Artist', ArtistSchema);
+const Artist = model('artist', ArtistSchema);
 
 export default Artist;
