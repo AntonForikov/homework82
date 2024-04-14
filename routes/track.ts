@@ -1,8 +1,9 @@
 import express from 'express';
-import {TrackFromDb, TrackWithoutId} from '../types';
+import {AlbumFromDB, TrackFromDb, TrackWithoutId} from '../types';
 import mongoose from 'mongoose';
 import {ObjectId} from 'mongodb';
 import Track from '../models/track';
+import Album from '../models/album';
 
 const trackRouter = express.Router();
 
@@ -29,7 +30,31 @@ trackRouter.post('/', async (req, res, next) => {
 });
 
 trackRouter.get('/', async (req, res, next) => {
-  const albumId = req.query.album;
+  const {album: albumId, artist: artistId} = req.query;
+
+  if (artistId && typeof (artistId) === 'string') {
+    try {
+      let artistObjectId: ObjectId;
+      try {
+        artistObjectId = new ObjectId(artistId);
+      } catch {
+        return res.status(404).send({error: 'Artist is not an ObjectId.'});
+      }
+
+      const albumsWithTargetArtist: AlbumFromDB[]  = await Album.find({artistId: artistObjectId}, {_id: 1});
+      if (albumsWithTargetArtist.length === 0) return res.status(404).send({error: 'No tracks found of this artist.'});
+
+      const albumIds = albumsWithTargetArtist.reduce((idList, albumDoc) => {
+        return [...idList, albumDoc._id];
+      }, <string[]>[]);
+
+      const tracks: TrackFromDb[] = await Track.find({album: {$in: albumIds}});
+
+      return res.send(tracks);
+    } catch (e) {
+      next(e);
+    }
+  }
 
   if(albumId && typeof (albumId) === 'string') {
     try {
