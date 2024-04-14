@@ -4,7 +4,6 @@ import Album from '../models/album';
 import {AlbumFromDB, AlbumWithoutId} from '../types';
 import mongoose from 'mongoose';
 import {ObjectId} from 'mongodb';
-import Artist from '../models/artist';
 
 const albumRouter = express.Router();
 
@@ -59,27 +58,8 @@ albumRouter.get('/', async (req, res, next) => {
 albumRouter.get('/:_id', async (req, res, next) => {
   try {
     const {_id} = req.params;
-    // const targetAlbum = await Album.find({_id}).populate('artists', 'name information image');
-    // return res.send(targetAlbum);
-    const targetAlbum = await Album.findOne({_id});
-    const artist = await Artist.findOne({_id: targetAlbum?.artistId});
-    if (targetAlbum && artist) {
-      const result = {
-        _id: targetAlbum._id,
-        title: targetAlbum.title,
-        artistId: targetAlbum.artistId,
-        year: targetAlbum.year,
-        image: targetAlbum.image,
-        artist: {
-          name: artist.name,
-          image: artist.image,
-          information: artist.information
-        }
-      }
-      return res.send(result);
-    } else {
-      return res.status(404).send({error: 'No such album'})
-    }
+    const targetAlbum = await Album.find({_id}).populate('artistId', 'name information image');
+    return res.send(targetAlbum);
   } catch (e) {
     if (e instanceof mongoose.Error.CastError) return res.status(404).send({error: 'No such album'});
     next(e);
