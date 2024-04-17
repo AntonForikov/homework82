@@ -36,6 +36,7 @@ export interface UserFields {
 
 export interface UserMethods {
   checkPassword(password: string): Promise<boolean>;
+  generateToken(): void;
 }
 
 export type UserModel = Model<UserFields, {}, UserMethods>

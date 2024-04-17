@@ -23,6 +23,10 @@ const UserSchema = new Schema<UserFields, UserModel, UserMethods>({
 UserSchema.method('checkPassword', async function (password: string) {
   return await bcrypt.compare(password, this.password);
 });
+
+UserSchema.method('generateToken', function () {
+  return this.token = crypto.randomUUID();
+});
 UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
 

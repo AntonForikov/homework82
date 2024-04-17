@@ -8,9 +8,9 @@ userRouter.post('/', async (req, res, next) => {
   try {
     const user = new User({
       username: req.body.username,
-      password: req.body.password,
-      token: req.body.token ? req.body.token : null
+      password: req.body.password
     });
+    user.generateToken();
     await user.save();
 
     return res.send(user);
@@ -30,7 +30,10 @@ userRouter.post('/sessions', async (req, res, next) => {
     const isMatch = await user.checkPassword(req.body.password);
     if (!isMatch) return res.status(404).send({error: "Username and password doesn't match."});
 
-    return res.send({message: 'Username and password matched.'});
+    user.generateToken();
+    await user.save();
+
+    return res.send({message: 'Username and password matched.', user});
   } catch (e) {
     next(e);
   }
