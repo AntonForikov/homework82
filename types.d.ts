@@ -25,3 +25,9 @@ export interface TrackFromDb {
 }
 
 export type TrackWithoutId = Omit<TrackFromDb, '_id'>
+
+export interface UserFields {
+  username: string;
+  password: string;
+  token: string;
+}
