@@ -1,3 +1,5 @@
+import {Model} from 'mongoose';
+
 export interface ArtistFromDB {
   _id: string;
   name: string;
@@ -31,3 +33,9 @@ export interface UserFields {
   password: string;
   token: string;
 }
+
+export interface UserMethods {
+  checkPassword(password: string): Promise<boolean>;
+}
+
+export type UserModel = Model<UserFields, {}, UserMethods>
