@@ -1,4 +1,5 @@
 import {Model} from 'mongoose';
+import {ObjectId} from 'mongodb';
 
 export interface ArtistFromDB {
   _id: string;
@@ -39,4 +40,13 @@ export interface UserMethods {
   generateToken(): void;
 }
 
-export type UserModel = Model<UserFields, {}, UserMethods>
+export type UserModel = Model<UserFields, {}, UserMethods>;
+
+export interface TrackHistoryFromDb {
+  _id: string;
+  userId: ObjectId;
+  trackId: ObjectId;
+  date: Date;
+}
+
+export type TrackHistoryWithoutId = Omit<TrackHistoryFromDb, '_id'>;

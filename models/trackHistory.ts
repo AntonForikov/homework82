@@ -25,7 +25,7 @@ const trackHistorySchema = new Schema({
     type: Date,
     required: true
   }
-});
+}, {versionKey: false});
 
 const trackHistory = model('trackHistory', trackHistorySchema);
 
