@@ -40,7 +40,7 @@ albumRouter.get('/', async (req, res, next) => {
         return res.status(404).send({error: 'Artist query is not ObjectId.'});
       }
 
-      const albums = await Album.find({artistId: _id}).sort('-year');
+      const albums = await Album.find({artistId: _id}).sort({year: -1});
       if (albums.length === 0) return res.status(404).send({error: 'There is no album with such artist ID.'});
 
       const result: AlbumWithTrackQuantity[] = [];
@@ -64,7 +64,7 @@ albumRouter.get('/', async (req, res, next) => {
   }
 
   try {
-    const albums = await Album.find().sort('-year');
+    const albums = await Album.find().sort({year: -1});
     return res.send(albums);
   } catch (e) {
     next(e);

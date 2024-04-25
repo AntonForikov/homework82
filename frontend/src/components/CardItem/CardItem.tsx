@@ -9,8 +9,6 @@ import no_image_available from '../../../assets/no_image_available.png'
 import React from 'react';
 import {apiUrl} from '../../constants';
 import {useNavigate} from 'react-router-dom';
-import {useAppDispatch} from '../../app/hooks';
-import {getArtistName} from '../../store/album/albumSlice';
 
 interface Props {
   id: string,
@@ -27,17 +25,13 @@ const ImageCardMedia = styled(CardMedia)({
 })
 
 const CardItem: React.FC<Props> = ({id, title, image, trackQuantity, releaseYear, albumCard = false}) => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   let cardImage = no_image_available;
 
-  if (image) {
-    cardImage = `${apiUrl}/${image}`;
-  }
+  if (image) cardImage = `${apiUrl}/${image}`;
 
   const onCardClick = () => {
-    if (albumCard) dispatch(getArtistName(title));
-    navigate(`/artist/${id}`);
+    if (albumCard) navigate(`/artist/${id}`);
   };
 
   return (

@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi';
-import {AlbumFromDb} from '../../types';
+import {AlbumFromDb, ArtistFromDb} from '../../types';
 
 export const getAlbums = createAsyncThunk(
   'getAlbums/get',
@@ -17,3 +17,11 @@ export const getAlbums = createAsyncThunk(
     }
   }
 );
+
+export const getAlbumArtist = createAsyncThunk(
+  'getAlbumArtist/get',
+  async (id: string) => {
+    const {data} = await axiosApi.get<ArtistFromDb>(`/artists/${id}`);
+    return data;
+  }
+)

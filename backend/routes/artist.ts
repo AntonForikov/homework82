@@ -33,4 +33,14 @@ artistRouter.get('/', async (req, res, next) => {
     next(e);
   }
 });
+
+artistRouter.get('/:_id', async (req, res, next) => {
+  try {
+    const {_id} = req.params
+    const artist: ArtistFromDB | null = await Artist.findOne({_id});
+    return res.send(artist);
+  } catch (e) {
+    next(e);
+  }
+});
 export default  artistRouter;
