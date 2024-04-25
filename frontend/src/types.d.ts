@@ -12,3 +12,11 @@ export interface AlbumFromDb {
   image: string | null;
   trackQuantity: string
 }
+
+export interface TrackFromDb {
+  _id: string;
+  title: string;
+  album: string;
+  duration: string | null;
+  indexNumber: string
+}

@@ -41,7 +41,7 @@ trackRouter.get('/', async (req, res, next) => {
         return res.status(404).send({error: 'Artist is not an ObjectId.'});
       }
 
-      const albumsWithTargetArtist: AlbumFromDB[]  = await Album.find({artistId: artistObjectId}, {_id: 1});
+      const albumsWithTargetArtist: AlbumFromDB[]  = await Album.find({artistId: artistObjectId}, {_id: 1}).sort({indexNumber: 1});
       if (albumsWithTargetArtist.length === 0) return res.status(404).send({error: 'No tracks found of this artist.'});
 
       const albumIds = albumsWithTargetArtist.reduce((idList, albumDoc) => {
@@ -65,7 +65,7 @@ trackRouter.get('/', async (req, res, next) => {
         return res.status(404).send({error: 'Album query is not an ObjectId.'});
       }
 
-      const tracks: TrackFromDb[] = await Track.find({album: _id});
+      const tracks: TrackFromDb[] = await Track.find({album: _id}).sort({indexNumber: 1});
       if (tracks.length === 0) return res.status(404).send({error: 'There is no tracks with such album.'});
       return res.send(tracks);
     } catch (e) {
