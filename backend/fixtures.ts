@@ -23,7 +23,7 @@ const resetDB = async () => {
   const [artist1, artist2] = await Artist.create(
     {
       name: 'Tool',
-      image: null
+      image: 'fixtureImages/tool_artist.jpeg'
     },
     {
       name: 'Pantera',
