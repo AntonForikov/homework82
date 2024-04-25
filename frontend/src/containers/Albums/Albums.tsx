@@ -35,6 +35,7 @@ const Albums = () => {
                   title={album.title}
                   image={album.image}
                   trackQuantity={album.trackQuantity}
+                  releaseYear={album.year}
                 />
               )
             })

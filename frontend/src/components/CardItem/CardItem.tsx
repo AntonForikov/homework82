@@ -16,6 +16,7 @@ interface Props {
   id: string,
   title: string,
   image: string | null,
+  releaseYear?: string
   trackQuantity?: string,
   albumCard?: boolean
 }
@@ -25,9 +26,8 @@ const ImageCardMedia = styled(CardMedia)({
   paddingTop: '56.25%'
 })
 
-const CardItem: React.FC<Props> = ({id, title, image, trackQuantity, albumCard = false}) => {
+const CardItem: React.FC<Props> = ({id, title, image, trackQuantity, releaseYear, albumCard = false}) => {
   const dispatch = useAppDispatch();
-  // const loading = useAppSelector(selectLoading);
   const navigate = useNavigate();
   let cardImage = no_image_available;
 
@@ -41,12 +41,15 @@ const CardItem: React.FC<Props> = ({id, title, image, trackQuantity, albumCard =
   };
 
   return (
-    <Grid item xs md={3} lg={3} onClick={onCardClick}>
+    <Grid item xs md={3} lg={3} sx={{cursor: 'pointer'}} onClick={onCardClick}>
       <Card>
         <CardHeader title={title} sx={{textAlign: 'center'}}/>
         <ImageCardMedia image={cardImage} title={title}/>
-        {trackQuantity &&
+        {(trackQuantity && releaseYear) &&
           <CardContent>
+            <Typography>
+              Release: {releaseYear}
+            </Typography>
             <Typography>
               Track quantity: {trackQuantity}
             </Typography>
