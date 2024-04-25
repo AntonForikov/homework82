@@ -3,9 +3,9 @@ import SendIcon from '@mui/icons-material/Send';
 import React, {useRef, useState} from 'react';
 import {ArtistFromDb} from '../../types';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import {selectArtistLoading} from '../../store/artistSlice';
+import {selectArtistLoading} from '../../store/artist/artistSlice';
 import FileInput from './FileInput';
-import {getArtists, sendNews} from '../../store/artistThunk';
+import {getArtists, sendNews} from '../../store/artist/artistThunk';
 import {useNavigate} from 'react-router-dom';
 
 const initialMessage: ArtistFromDb = {

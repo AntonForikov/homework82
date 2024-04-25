@@ -1,9 +1,10 @@
 import express from 'express';
 import {imagesUpload} from '../multer';
 import Album from '../models/album';
-import {AlbumFromDB, AlbumWithoutId} from '../types';
+import {AlbumWithoutId, AlbumWithTrackQuantity} from '../types';
 import mongoose from 'mongoose';
 import {ObjectId} from 'mongodb';
+import Track from '../models/track';
 
 const albumRouter = express.Router();
 
@@ -28,7 +29,7 @@ albumRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
 });
 
 albumRouter.get('/', async (req, res, next) => {
-  const artist = req.query.artist;
+  const {artist} = req.query;
 
   if(artist && typeof artist === 'string') {
     try {
@@ -39,16 +40,31 @@ albumRouter.get('/', async (req, res, next) => {
         return res.status(404).send({error: 'Artist query is not ObjectId.'});
       }
 
-      const albums: AlbumFromDB[] = await Album.find({artistId: _id});
+      const albums = await Album.find({artistId: _id}).sort('-year');
       if (albums.length === 0) return res.status(404).send({error: 'There is no album with such artist ID.'});
-      return res.send(albums);
+
+      const result: AlbumWithTrackQuantity[] = [];
+
+      for (const album of albums) {
+        const albumTracks = await Track.find({album: album._id});
+        result.push({
+          _id: album._id,
+          title: album.title,
+          artistId: album.artistId,
+          year: album.year,
+          image: album.image,
+          trackQuantity: albumTracks.length,
+        });
+      }
+
+      return res.send(result);
     } catch (e) {
       next(e);
     }
   }
 
   try {
-    const albums: AlbumFromDB[] = await Album.find();
+    const albums = await Album.find().sort('-year');
     return res.send(albums);
   } catch (e) {
     next(e);

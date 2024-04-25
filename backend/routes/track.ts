@@ -46,7 +46,7 @@ trackRouter.get('/', async (req, res, next) => {
 
       const albumIds = albumsWithTargetArtist.reduce((idList, albumDoc) => {
         return [...idList, albumDoc._id];
-      }, <string[]>[]);
+      }, <ObjectId[]>[]);
 
       const tracks: TrackFromDb[] = await Track.find({album: {$in: albumIds}});
 

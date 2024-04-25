@@ -1,6 +1,6 @@
-import {ArtistFromDb} from '../types';
+import {ArtistFromDb} from '../../types';
 import {createSlice} from '@reduxjs/toolkit';
-import {RootState} from '../app/store';
+import {RootState} from '../../app/store';
 import {getArtists} from './artistThunk';
 
 interface ArtistState {
@@ -20,9 +20,9 @@ const artistSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getArtists.pending, (state) => {
       state.artistLoading = true;
-    }).addCase(getArtists.fulfilled, (state, {payload: artistList}) => {
+    }).addCase(getArtists.fulfilled, (state, {payload: albumList}) => {
       state.artistLoading = false;
-      if (artistList) state.artistList = artistList;
+      if (albumList) state.artistList = albumList;
     }).addCase(getArtists.rejected, (state) => {
       state.artistLoading = false;
     });

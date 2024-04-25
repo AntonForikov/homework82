@@ -1,19 +1,22 @@
 import {
-  Card,
+  Card, CardContent,
   CardHeader,
   CardMedia,
   Grid,
-  styled,
+  styled, Typography,
 } from '@mui/material';
 import no_image_available from '../../../assets/no_image_available.png'
 import React from 'react';
 import {apiUrl} from '../../constants';
 import {useNavigate} from 'react-router-dom';
+import {useAppDispatch} from '../../app/hooks';
+import {getArtistName} from '../../store/album/albumSlice';
 
 interface Props {
   id: string,
   title: string,
-  image: string | null
+  image: string | null,
+  trackQuantity?: string
 }
 
 const ImageCardMedia = styled(CardMedia)({
@@ -21,8 +24,8 @@ const ImageCardMedia = styled(CardMedia)({
   paddingTop: '56.25%'
 })
 
-const CardItem: React.FC<Props> = ({id, title, image}) => {
-  // const dispatch = useAppDispatch();
+const CardItem: React.FC<Props> = ({id, title, image, trackQuantity}) => {
+  const dispatch = useAppDispatch();
   // const loading = useAppSelector(selectLoading);
   const navigate = useNavigate();
   let cardImage = no_image_available;
@@ -32,7 +35,8 @@ const CardItem: React.FC<Props> = ({id, title, image}) => {
   }
 
   const onCardClick = () => {
-    navigate(`/artist/${id}`)
+    dispatch(getArtistName(title));
+    navigate(`/artist/${id}`);
   };
 
   return (
@@ -40,6 +44,13 @@ const CardItem: React.FC<Props> = ({id, title, image}) => {
       <Card>
         <CardHeader title={title} sx={{textAlign: 'center'}}/>
         <ImageCardMedia image={cardImage} title={title}/>
+        {trackQuantity &&
+          <CardContent>
+            <Typography>
+              Track quantity: {trackQuantity}
+            </Typography>
+          </CardContent>
+        }
       </Card>
     </Grid>
   );

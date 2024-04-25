@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import axiosApi from '../axiosApi';
-import {ArtistFromDb} from '../types';
+import axiosApi from '../../axiosApi';
+import {ArtistFromDb} from '../../types';
 
 export const getArtists = createAsyncThunk(
   'getArtists/get',

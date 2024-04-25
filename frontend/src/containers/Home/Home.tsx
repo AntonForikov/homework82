@@ -1,10 +1,10 @@
 
 import {Alert, CircularProgress, Grid, Typography} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import {selectArtistLoading, selectArtistList} from '../../store/artistSlice';
+import {selectArtistLoading, selectArtistList} from '../../store/artist/artistSlice';
 import {useEffect} from 'react';
-import {getArtists} from '../../store/artistThunk';
-import CardItem from '../CardItem/CardItem';
+import {getArtists} from '../../store/artist/artistThunk';
+import CardItem from '../../components/CardItem/CardItem';
 
 
 const Home = () => {

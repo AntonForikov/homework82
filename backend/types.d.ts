@@ -2,7 +2,7 @@ import {Model} from 'mongoose';
 import {ObjectId} from 'mongodb';
 
 export interface ArtistFromDB {
-  _id: string;
+  _id: ObjectId;
   name: string;
   information: string | null;
   image: string | null;
@@ -11,19 +11,23 @@ export interface ArtistFromDB {
 export type ArtistWithoutId = Omit<ArtistFromDB, '_id'>;
 
 export interface AlbumFromDB {
-  _id: string;
+  _id: ObjectId;
   title: string;
-  artistId: string;
-  year: string;
-  image: string | null;
+  artistId: ObjectId;
+  year: number;
+  image?: string | null;
+}
+
+export interface AlbumWithTrackQuantity extends AlbumFromDB {
+  trackQuantity: number
 }
 
 export type AlbumWithoutId = Omit<AlbumFromDB, '_id'>;
 
 export interface TrackFromDb {
-  _id: string;
+  _id: ObjectId;
   title: string;
-  album: string;
+  album: ObjectId;
   duration: string | null;
 }
 
