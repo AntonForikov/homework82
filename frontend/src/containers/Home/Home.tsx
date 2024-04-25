@@ -31,6 +31,7 @@ const Home = () => {
                     id={artist._id}
                     title={artist.name}
                     image={artist.image}
+                    albumCard
                   />
               )
             })
