@@ -19,6 +19,10 @@ const TrackSchema = new Schema({
   duration: {
     type: String,
     required: true
+  },
+  indexNumber: {
+    type: Number,
+    required: true,
   }
 }, {versionKey: false});
 
