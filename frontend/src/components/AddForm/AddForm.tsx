@@ -1,22 +1,22 @@
 import {Button, Grid, TextField} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import React, {useRef, useState} from 'react';
-import {News} from '../../types';
+import {ArtistFromDb} from '../../types';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import {selectLoading} from '../../store/newsSlice';
+import {selectArtistLoading} from '../../store/artistSlice';
 import FileInput from './FileInput';
-import {getNews, sendNews} from '../../store/newsThunk';
+import {getArtists, sendNews} from '../../store/artistThunk';
 import {useNavigate} from 'react-router-dom';
 
-const initialMessage: News = {
+const initialMessage: ArtistFromDb = {
   title: '',
   content: '',
   image: null
 };
 const AddForm = () => {
-  const loading = useAppSelector(selectLoading);
+  const loading = useAppSelector(selectArtistLoading);
   const dispatch = useAppDispatch();
-  const [news, setNews] = useState<News>(initialMessage);
+  const [news, setNews] = useState<ArtistFromDb>(initialMessage);
   const [fileName, setFileName] = useState('');
   const resetButtonRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ const AddForm = () => {
     } else {
       try {
         await dispatch(sendNews(news));
-        await dispatch(getNews());
+        await dispatch(getArtists());
         navigate('/');
       } catch (e) {
         console.error(e);

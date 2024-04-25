@@ -1,9 +1,9 @@
 import {configureStore} from '@reduxjs/toolkit';
-import {newsReducer} from '../store/newsSlice';
+import {artistReducer} from '../store/artistSlice';
 
 export const store = configureStore({
   reducer: {
-    news: newsReducer
+    artists: artistReducer
   }
 });
 

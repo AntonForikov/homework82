@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <AppBar position='static'>
       <Typography variant='h6' padding={2} component={Link} to='/' sx={{color: 'white', textDecoration: 'none'}}>
-        News
+        Spotify
       </Typography>
     </AppBar>
   );
