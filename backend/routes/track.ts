@@ -1,5 +1,5 @@
 import express from 'express';
-import {AlbumFromDB, TrackFromDb, TrackWithoutId} from '../types';
+import {AlbumFromDB, ArtistFromDB, TrackFromDb, TrackWithoutId} from '../types';
 import mongoose from 'mongoose';
 import {ObjectId} from 'mongodb';
 import Track from '../models/track';
@@ -65,7 +65,17 @@ trackRouter.get('/', async (req, res, next) => {
         return res.status(404).send({error: 'Album query is not an ObjectId.'});
       }
 
-      const tracks: TrackFromDb[] = await Track.find({album: _id}).sort({indexNumber: 1});
+      const populationSchema = {
+        path: 'album',
+        select: 'title -_id',
+        populate: {
+          path: 'artistId',
+          select: 'name -_id',
+          transform: (doc: ArtistFromDB) => doc !== null ? doc.name : 'Unknown artist.'
+        }
+      }
+
+      const tracks = await Track.find({album: _id}).sort({indexNumber: 1}).populate(populationSchema);
       if (tracks.length === 0) return res.status(404).send({error: 'There is no tracks with such album.'});
       return res.send(tracks);
     } catch (e) {
@@ -74,7 +84,7 @@ trackRouter.get('/', async (req, res, next) => {
   }
 
   try {
-    const tracks: TrackFromDb[] = await Track.find();
+    const tracks: TrackFromDb[] = await Track.find().sort({indexNumber: 1});
     return res.send(tracks);
   } catch (e) {
     next(e);

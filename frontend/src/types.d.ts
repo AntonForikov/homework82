@@ -16,7 +16,7 @@ export interface AlbumFromDb {
 export interface TrackFromDb {
   _id: string;
   title: string;
-  album: string;
+  album: {title: string, artistId: string};
   duration: string | null;
   indexNumber: string
 }

@@ -10,7 +10,7 @@ const TrackSchema = new Schema({
   album: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'Albums',
+    ref: 'albums',
     validate: {
       validator: async (id: ObjectId) => Album.findById(id),
       message: 'Album does not exist'
