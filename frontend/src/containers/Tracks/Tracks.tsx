@@ -26,7 +26,10 @@ const Tracks = () => {
   return (
     <>
       <Grid container justifyContent="center" alignItems="center" gap={3}>
-        <Grid container justifyContent='center' marginTop={3}><Typography variant="h4">{albumInfo.artist}: {albumInfo.title}</Typography></Grid>
+        {
+          (albumInfo.artist !== '' && albumInfo.title !== '')
+          && <Grid container justifyContent='center' marginTop={3}><Typography variant="h4">{albumInfo.artist}: {albumInfo.title}</Typography></Grid>
+        }
         {loading
           ? <CircularProgress/>
           : !loading && trackList.length < 1
