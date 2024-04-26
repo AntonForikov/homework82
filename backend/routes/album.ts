@@ -13,7 +13,7 @@ albumRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
     const {title, artistId, year} = req.body;
     const albumData: AlbumWithoutId = {
       title: title,
-      artistId: artistId,
+      artist: artistId,
       year: year,
       image: req.file ? req.file.filename : null
     }
@@ -40,7 +40,7 @@ albumRouter.get('/', async (req, res, next) => {
         return res.status(404).send({error: 'Artist query is not ObjectId.'});
       }
 
-      const albums = await Album.find({artistId: _id}).sort({year: -1});
+      const albums = await Album.find({artist: _id}).sort({year: -1});
       if (albums.length === 0) return res.status(404).send({error: 'There is no album with such artist ID.'});
 
       const result: AlbumWithTrackQuantity[] = [];
@@ -50,7 +50,7 @@ albumRouter.get('/', async (req, res, next) => {
         result.push({
           _id: album._id,
           title: album.title,
-          artistId: album.artistId,
+          artist: album.artist,
           year: album.year,
           image: album.image,
           trackQuantity: albumTracks.length,

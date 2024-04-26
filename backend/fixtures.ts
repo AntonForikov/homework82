@@ -34,25 +34,25 @@ const resetDB = async () => {
   const [album1, album2, album3, album4] = await Album.create(
     {
       title: 'aenima',
-      artistId: artist1,
+      artist: artist1,
       year: 1996,
       image: null
     },
     {
       title: '10000 Days',
-      artistId: artist1,
+      artist: artist1,
       year: 2006,
       image: null
     },
     {
       title: 'Vulgar Display of Power',
-      artistId: artist2,
+      artist: artist2,
       year: 1992,
-      image: null
+      image: 'fixtureImages/vulgar_display_of_power.jpeg'
     },
     {
       title: 'Far Beyond Driven',
-      artistId: artist2,
+      artist: artist2,
       year: 1994,
       image: null
     }

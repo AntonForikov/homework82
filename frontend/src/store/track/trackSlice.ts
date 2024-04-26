@@ -6,7 +6,7 @@ import {getTracks} from './truckThunk';
 interface TrackState {
   albumInfo: {
     title: string;
-    artistId: string
+    artist: string
   }
   trackList: TrackFromDb[],
   trackLoading: boolean,
@@ -15,7 +15,7 @@ interface TrackState {
 const initialState: TrackState = {
   albumInfo: {
     title: '',
-    artistId: ''
+    artist: ''
   },
   trackList: [],
   trackLoading: false,
@@ -32,7 +32,7 @@ const trackSlice = createSlice({
       state.trackLoading = false;
       if (trackList) {
         state.trackList = trackList;
-        state.albumInfo.artistId = trackList[0].album.artistId
+        state.albumInfo.artist = trackList[0].album.artist
         state.albumInfo.title = trackList[0].album.title
       }
     }).addCase(getTracks.rejected, (state) => {

@@ -7,7 +7,7 @@ export interface ArtistFromDb {
 export interface AlbumFromDb {
   _id: string;
   title: string;
-  artistId: string;
+  artist: string;
   year: string;
   image: string | null;
   trackQuantity: string
@@ -16,7 +16,7 @@ export interface AlbumFromDb {
 export interface TrackFromDb {
   _id: string;
   title: string;
-  album: {title: string, artistId: string};
+  album: {title: string, artist: string};
   duration: string | null;
   indexNumber: string
 }

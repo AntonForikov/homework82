@@ -13,7 +13,7 @@ export type ArtistWithoutId = Omit<ArtistFromDB, '_id'>;
 export interface AlbumFromDB {
   _id: ObjectId;
   title: string;
-  artistId: ObjectId;
+  artist: ObjectId;
   year: number;
   image?: string | null;
 }
