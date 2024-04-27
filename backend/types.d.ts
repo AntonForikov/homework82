@@ -39,6 +39,10 @@ export interface UserFields {
   token: string;
 }
 
+export interface UserFromDb extends UserFields {
+  _id: ObjectId
+}
+
 export interface UserMethods {
   checkPassword(password: string): Promise<boolean>;
   generateToken(): void;
