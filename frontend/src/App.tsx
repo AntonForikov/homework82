@@ -3,7 +3,7 @@ import Home from './containers/Home/Home';
 import {Route, Routes} from 'react-router-dom';
 import Albums from './containers/Albums/Albums';
 import Tracks from './containers/Tracks/Tracks';
-import Register from './containers/Register/Register';
+import Register from './containers/User/Register';
 function App() {
   return (
     <>
