@@ -20,3 +20,31 @@ export interface TrackFromDb {
   duration: string | null;
   indexNumber: string
 }
+
+export interface UserFromDb {
+  _id: string;
+  username: string;
+  token: string;
+}
+
+export interface RegisterResponse {
+  user: UserFromDb;
+  message: string
+}
+
+export interface ValidationError {
+  errors: {
+    [key: string]: {
+      name: string;
+      message: string;
+    }
+  },
+  message: string;
+  name: string;
+  _message: string;
+}
+
+export interface UserMutation {
+  username: string;
+  password: string;
+}

@@ -10,13 +10,19 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {Link as RouterLink} from 'react-router-dom'
+import {Link as RouterLink, useNavigate} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {selectRegisterError} from '../../store/user/userSlice';
+import {register} from '../../store/user/userThunk';
 
 const initialFields = {
   username: '',
   password: ''
-}
+};
 const Register = () => {
+  const dispatch = useAppDispatch();
+  const error = useAppSelector(selectRegisterError);
+  const navigate = useNavigate();
   const [user, setUser] = useState(initialFields);
 
   const changeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +33,19 @@ const Register = () => {
     }));
   };
 
+  const submitFormHandler = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await dispatch(register(user)).unwrap();
+    navigate('/');
+  };
 
+  const getFieldError = (fieldName: string) => {
+    try {
+      return error?.errors[fieldName].message;
+    } catch {
+      return undefined;
+    }
+  };
 
   return (
     <Container>
@@ -45,26 +63,28 @@ const Register = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" noValidate sx={{mt: 1}}>
+        <Box component="form" onSubmit={submitFormHandler} sx={{mt: 1}}>
           <TextField
             margin="normal"
-            required
             fullWidth
             label="Username"
             name="username"
             value={user.username}
             onChange={changeEventHandler}
             autoFocus
+            error={Boolean(getFieldError('username'))}
+            helperText={getFieldError('username')}
           />
           <TextField
             margin="normal"
-            required
             fullWidth
             name="password"
             value={user.password}
             label="Password"
             type="password"
             onChange={changeEventHandler}
+            error={Boolean(getFieldError('password'))}
+            helperText={getFieldError('password')}
           />
           <Grid container justifyContent="space-between" alignItems="center">
             <FormControlLabel
@@ -90,6 +110,6 @@ const Register = () => {
       </Box>
     </Container>
   );
-}
+};
 
 export default Register;
