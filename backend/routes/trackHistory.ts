@@ -4,31 +4,23 @@ import User from '../models/user';
 import {TrackHistoryWithoutId} from '../types';
 import TrackHistory from '../models/trackHistory';
 import mongoose from 'mongoose';
+import auth, {Auth} from '../middleware/auth';
 
 const trackHistoryRoute = express.Router();
 
-trackHistoryRoute.post('/', async (req, res, next) => {
+trackHistoryRoute.post('/', auth, async (req: Auth, res, next) => {
   try {
-    const {trackId} = req.body;
+    const {track} = req.body;
     let id: ObjectId;
     try {
-      id = new ObjectId(trackId);
+      id = new ObjectId(track);
     } catch (e) {
       return res.status(404).send({error: "'trackId' in not an ObjectId."});
     }
 
-    const tokenData = req.get('Authorization');
-
-    if (!tokenData) return res.status(401).send({error: 'No token provided.'});
-
-    const [_, token] = tokenData.split(' ');
-    const user = await User.findOne({token});
-
-    if (!user) return res.status(403).send({error: 'Wrong token'});
-
     const trackHistoryData: TrackHistoryWithoutId = {
-      userId: user._id,
-      trackId: id,
+      user: req.user?._id,
+      track: id,
       date: new Date()
     };
 

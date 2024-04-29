@@ -52,8 +52,8 @@ export type UserModel = Model<UserFields, {}, UserMethods>;
 
 export interface TrackHistoryFromDb {
   _id: string;
-  userId: ObjectId;
-  trackId: ObjectId;
+  user: ObjectId | undefined;
+  track: ObjectId;
   date: Date;
 }
 

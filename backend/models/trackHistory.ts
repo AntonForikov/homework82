@@ -3,7 +3,7 @@ import User from './user';
 import Track from './track';
 
 const trackHistorySchema = new Schema({
-  userId: {
+  user: {
     type: Schema.Types.ObjectId,
     ref: 'users',
     required: true,
@@ -12,7 +12,7 @@ const trackHistorySchema = new Schema({
       message: 'User does not exist'
     }
   },
-  trackId: {
+  track: {
     type: Schema.Types.ObjectId,
     ref: 'tracks',
     required: true,
