@@ -1,5 +1,5 @@
 import {UserFields, UserMethods, UserModel} from '../types';
-import {Schema, model} from 'mongoose';
+import {Schema, model, HydratedDocument} from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const SALT_WORK_FACTOR = 10;
@@ -10,10 +10,11 @@ const UserSchema = new Schema<UserFields, UserModel, UserMethods>({
     required: true,
     unique: true,
     validate: {
-      validator: async (username: string) => {
-        const user = await User.findOne({username});
-        if (user) return false;
-        return true;
+      validator: async function (this: HydratedDocument<UserFields> ,username: string): Promise<boolean> {
+        if (!this.isModified('username')) return true;
+
+        const user: HydratedDocument<UserFields> | null = await User.findOne({username});
+        return !Boolean(user);
       },
       message: 'This user already exist'
     }
