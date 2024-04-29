@@ -7,21 +7,22 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {Link as RouterLink, useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import {selectRegisterError} from '../../store/user/userSlice';
-import {register} from '../../store/user/userThunk';
+import {selectLoginError} from '../../store/user/userSlice';
+import {login} from '../../store/user/userThunk';
+import {Alert} from '@mui/material';
 
 const initialFields = {
   username: '',
   password: ''
 };
-const Register = () => {
+const Login = () => {
   const dispatch = useAppDispatch();
-  const error = useAppSelector(selectRegisterError);
+  const error = useAppSelector(selectLoginError);
   const navigate = useNavigate();
   const [user, setUser] = useState(initialFields);
 
@@ -35,17 +36,17 @@ const Register = () => {
 
   const submitFormHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    await dispatch(register(user)).unwrap();
+    await dispatch(login(user)).unwrap();
     navigate('/');
   };
 
-  const getFieldError = (fieldName: string) => {
-    try {
-      return error?.errors[fieldName].message;
-    } catch {
-      return undefined;
-    }
-  };
+  // const getFieldError = (fieldName: string) => {
+  //   try {
+  //     return error?.errors[fieldName].message;
+  //   } catch {
+  //     return undefined;
+  //   }
+  // };
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -58,11 +59,14 @@ const Register = () => {
         }}
       >
         <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-          <LockOutlinedIcon/>
+          <LockOpenIcon/>
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+        {error &&
+          <Alert severity='error' sx={{mt: 5, width: '100%'}}>{error.error}</Alert>
+        }
         <Box component="form" onSubmit={submitFormHandler} sx={{mt: 1}}>
           <TextField
             margin="normal"
@@ -72,8 +76,6 @@ const Register = () => {
             value={user.username}
             onChange={changeEventHandler}
             autoFocus
-            error={Boolean(getFieldError('username'))}
-            helperText={getFieldError('username')}
           />
           <TextField
             margin="normal"
@@ -83,8 +85,6 @@ const Register = () => {
             label="Password"
             type="password"
             onChange={changeEventHandler}
-            error={Boolean(getFieldError('password'))}
-            helperText={getFieldError('password')}
           />
           <Grid container justifyContent="space-between" alignItems="center">
             <FormControlLabel
@@ -92,8 +92,8 @@ const Register = () => {
               label="Remember me"
             />
             <Grid item>
-              <Link component={RouterLink} to='/login' variant="body2">
-                {'Already have an account?'}
+              <Link component={RouterLink} to='/register' variant="body2">
+                {'Or register?'}
               </Link>
             </Grid>
           </Grid>
@@ -104,7 +104,7 @@ const Register = () => {
             variant="contained"
             sx={{mt: 3, mb: 2}}
           >
-            Sign Up
+            Sign in
           </Button>
         </Box>
       </Box>
@@ -112,4 +112,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

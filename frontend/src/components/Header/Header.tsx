@@ -1,7 +1,12 @@
-import {AppBar, Button, Grid, Toolbar, Typography} from '@mui/material';
-import {Link, NavLink} from 'react-router-dom';
+import {AppBar, Grid, Toolbar, Typography} from '@mui/material';
+import {Link} from 'react-router-dom';
+import {useAppSelector} from '../../app/hooks';
+import {selectUser} from '../../store/user/userSlice';
+import AnonymousMenu from './AnonymousMenu';
+import UserMenu from './UserMenu';
 
 const Header = () => {
+  const user = useAppSelector(selectUser);
   return (
     <AppBar position='static'>
       <Toolbar>
@@ -10,12 +15,10 @@ const Header = () => {
             Spotify
           </Typography>
           <Grid>
-            <Button component={NavLink} to='/login' sx={{color: 'inherit'}}>
-              login
-            </Button>
-            <Button component={NavLink} to='/register' sx={{color: 'inherit'}}>
-              Sign Up
-            </Button>
+            {user
+              ? <UserMenu user={user}/>
+              : <AnonymousMenu/>
+            }
           </Grid>
         </Grid>
       </Toolbar>

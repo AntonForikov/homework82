@@ -4,6 +4,8 @@ import {Route, Routes} from 'react-router-dom';
 import Albums from './containers/Albums/Albums';
 import Tracks from './containers/Tracks/Tracks';
 import Register from './containers/User/Register';
+import Login from './containers/User/Login';
+import Container from '@mui/material/Container';
 function App() {
   return (
     <>
@@ -11,13 +13,16 @@ function App() {
         <Header/>
       </header>
       <main>
-        <Routes>
-          <Route path='/' element={<Home/>}/>
-          <Route path='artist/:id' element={<Albums/>}/>
-          <Route path='album/:albumId' element={<Tracks/>}/>
-          <Route path='/register' element={<Register />}/>
-          <Route path="*" element={<h1>Not found</h1>}/>
-        </Routes>
+        <Container maxWidth='xl'>
+          <Routes>
+            <Route path='/' element={<Home/>}/>
+            <Route path='artist/:id' element={<Albums/>}/>
+            <Route path='album/:albumId' element={<Tracks/>}/>
+            <Route path='/register' element={<Register />}/>
+            <Route path='/login' element={<Login />}/>
+            <Route path="*" element={<h1>Not found</h1>}/>
+          </Routes>
+        </Container>
       </main>
     </>
   );
