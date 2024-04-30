@@ -44,7 +44,7 @@ const Albums = () => {
                   releaseYear={album.year}
                   trackCard
                 />
-              )
+              );
             })
         }
       </Grid>

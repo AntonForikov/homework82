@@ -5,7 +5,7 @@ import {
   Grid,
   styled, Typography,
 } from '@mui/material';
-import no_image_available from '../../../assets/no_image_available.png'
+import no_image_available from '../../../assets/no_image_available.png';
 import React from 'react';
 import {apiUrl} from '../../constants';
 import {useNavigate} from 'react-router-dom';
@@ -23,7 +23,7 @@ interface Props {
 const ImageCardMedia = styled(CardMedia)({
   height: 0,
   paddingTop: '56.25%'
-})
+});
 
 const CardItem: React.FC<Props> = ({id, title, image, trackQuantity, releaseYear, albumCard = false, trackCard = false}) => {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const CardItem: React.FC<Props> = ({id, title, image, trackQuantity, releaseYear
 
   const onCardClick = () => {
     if (albumCard) navigate(`/artist/${id}`);
-    if (trackCard) navigate(`/album/${id}`)
+    if (trackCard) navigate(`/album/${id}`);
   };
 
   return (

@@ -33,7 +33,7 @@ const Home = () => {
                     image={artist.image}
                     albumCard
                   />
-              )
+              );
             })
         }
       </Grid>
