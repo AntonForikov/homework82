@@ -1,6 +1,5 @@
 import express from 'express';
 import {ObjectId} from 'mongodb';
-import User from '../models/user';
 import {TrackHistoryWithoutId} from '../types';
 import TrackHistory from '../models/trackHistory';
 import mongoose from 'mongoose';
@@ -30,6 +29,19 @@ trackHistoryRoute.post('/', auth, async (req: Auth, res, next) => {
     return res.send(trackHistory);
   } catch (e) {
     if (e instanceof mongoose.Error.ValidationError) return res.status(422).send(e);
+    next(e);
+  }
+});
+
+trackHistoryRoute.get('/', auth, async (req: Auth, res, next) => {
+  try {
+    const targetTracks = await TrackHistory.find({user: req.user?._id}).sort({date: 1});
+
+    const result = targetTracks.map((track) => {
+
+    })
+    return res.send(targetTracks);
+  } catch (e) {
     next(e);
   }
 });
