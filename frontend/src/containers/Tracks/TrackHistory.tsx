@@ -45,17 +45,6 @@ const TrackHistory: React.FC = () => {
         })
       }
     </>
-
-    // <Paper
-    //   elevation={3}
-    //   key={trackId}
-    //   sx={{padding: 2, marginY: 1, display: 'flex', justifyContent: 'space-between'}}
-    // >
-    //   <Box sx={{display: 'flex', alignItems: 'center'}}>
-    //     {indexNumber}. {title}
-    //   </Box>
-    //   <Box>{duration}</Box>
-    // </Paper>
   );
 };
 
