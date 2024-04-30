@@ -32,8 +32,8 @@ const trackSlice = createSlice({
       state.trackLoading = false;
       if (trackList) {
         state.trackList = trackList;
-        state.albumInfo.artist = trackList[0].album.artist
-        state.albumInfo.title = trackList[0].album.title
+        state.albumInfo.artist = trackList[0].album.artist;
+        state.albumInfo.title = trackList[0].album.title;
       }
     }).addCase(getTracks.rejected, (state) => {
       state.trackLoading = false;

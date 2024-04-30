@@ -40,14 +40,6 @@ const Login = () => {
     navigate('/');
   };
 
-  // const getFieldError = (fieldName: string) => {
-  //   try {
-  //     return error?.errors[fieldName].message;
-  //   } catch {
-  //     return undefined;
-  //   }
-  // };
-
   return (
     <Container component='main' maxWidth='xs'>
       <Box

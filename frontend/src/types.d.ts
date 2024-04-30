@@ -17,7 +17,7 @@ export interface TrackFromDb {
   _id: string;
   title: string;
   album: {title: string, artist: string};
-  duration: string | null;
+  duration: string;
   indexNumber: string
 }
 
