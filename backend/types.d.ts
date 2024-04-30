@@ -54,6 +54,7 @@ export interface TrackHistoryFromDb {
   _id: string;
   user: ObjectId | undefined;
   track: ObjectId;
+  artist: ObjectId;
   date: Date;
 }
 

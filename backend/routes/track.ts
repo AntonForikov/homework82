@@ -67,13 +67,13 @@ trackRouter.get('/', async (req, res, next) => {
 
       const populationSchema = {
         path: 'album',
-        select: 'title -_id',
+        select: 'title _id',
         populate: {
           path: 'artist',
-          select: 'name -_id',
-          transform: (doc: ArtistFromDB) => doc !== null ? doc.name : 'Unknown artist.'
+          select: 'name _id',
         }
       }
+
 
       const tracks = await Track.find({album: _id}).sort({indexNumber: 1}).populate(populationSchema);
       if (tracks.length === 0) return res.status(404).send({error: 'There is no tracks with such album.'});
