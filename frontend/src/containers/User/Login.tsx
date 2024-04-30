@@ -12,9 +12,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {Link as RouterLink, useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import {selectLoginError} from '../../store/user/userSlice';
+import {selectLoginError, selectLoginLoading} from '../../store/user/userSlice';
 import {login} from '../../store/user/userThunk';
-import {Alert} from '@mui/material';
+import {Alert, CircularProgress} from '@mui/material';
 
 const initialFields = {
   username: '',
@@ -23,6 +23,7 @@ const initialFields = {
 const Login = () => {
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectLoginError);
+  const loginLoading = useAppSelector(selectLoginLoading);
   const navigate = useNavigate();
   const [user, setUser] = useState(initialFields);
 
@@ -41,66 +42,71 @@ const Login = () => {
   };
 
   return (
-    <Container component='main' maxWidth='xs'>
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-          <LockOpenIcon/>
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        {error &&
-          <Alert severity='error' sx={{mt: 5, width: '100%'}}>{error.error}</Alert>
-        }
-        <Box component="form" onSubmit={submitFormHandler} sx={{mt: 1}}>
-          <TextField
-            margin="normal"
-            fullWidth
-            label="Username"
-            name="username"
-            value={user.username}
-            onChange={changeEventHandler}
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            fullWidth
-            name="password"
-            value={user.password}
-            label="Password"
-            type="password"
-            onChange={changeEventHandler}
-          />
-          <Grid container justifyContent="space-between" alignItems="center">
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary"/>}
-              label="Remember me"
-            />
-            <Grid item>
-              <Link component={RouterLink} to='/register' variant="body2">
-                {'Or register?'}
-              </Link>
-            </Grid>
-          </Grid>
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{mt: 3, mb: 2}}
+    <>
+      {loginLoading
+        ? <Grid container justifyContent='center' mt={2}><CircularProgress/></Grid>
+        : <Container component="main" maxWidth="xs">
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
           >
-            Sign in
-          </Button>
-        </Box>
-      </Box>
-    </Container>
+            <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+              <LockOpenIcon/>
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            {error &&
+              <Alert severity="error" sx={{mt: 5, width: '100%'}}>{error.error}</Alert>
+            }
+            <Box component="form" onSubmit={submitFormHandler} sx={{mt: 1}}>
+              <TextField
+                margin="normal"
+                fullWidth
+                label="Username"
+                name="username"
+                value={user.username}
+                onChange={changeEventHandler}
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                fullWidth
+                name="password"
+                value={user.password}
+                label="Password"
+                type="password"
+                onChange={changeEventHandler}
+              />
+              <Grid container justifyContent="space-between" alignItems="center">
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary"/>}
+                  label="Remember me"
+                />
+                <Grid item>
+                  <Link component={RouterLink} to="/register" variant="body2">
+                    {'Or register?'}
+                  </Link>
+                </Grid>
+              </Grid>
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{mt: 3, mb: 2}}
+              >
+                Sign in
+              </Button>
+            </Box>
+          </Box>
+        </Container>
+      }
+    </>
   );
 };
 

@@ -11,19 +11,25 @@ interface Props {
   indexNumber: string;
   title: string;
   duration: string;
+  artistId: string;
 }
 
-const TrackItem: React.FC<Props> = ({trackId, indexNumber, title, duration}) => {
+const TrackItem: React.FC<Props> = ({trackId, indexNumber, title, duration, artistId}) => {
   const user = useAppSelector(selectUser);
 
   const sendTrack = async () => {
-    await axiosApi.post(`/trackHistory`, {
-      track: trackId
-    }, {
-      headers: {
-        Authorization: `Bearer ${user?.token}`
-      }
-    });
+    if (!user) {
+      alert('Please login before listen tracks.');
+    } else {
+      await axiosApi.post(`/trackHistory`, {
+        track: trackId,
+        artist: artistId
+      }, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`
+        }
+      });
+    }
   };
 
   return (
