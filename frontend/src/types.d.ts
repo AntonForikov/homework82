@@ -16,9 +16,31 @@ export interface AlbumFromDb {
 export interface TrackFromDb {
   _id: string;
   title: string;
-  album: {title: string, artist: string};
+  album: {
+    _id: string,
+    title: string,
+    artist: {
+      _id: string,
+      name: string
+    }
+  };
   duration: string;
   indexNumber: string
+}
+
+export interface TrackHistory {
+  _id: string;
+  user: string;
+  track: {
+    _id: string;
+    title: string;
+
+  };
+  artist: {
+    _id: string;
+    name: string;
+  };
+  date: string
 }
 
 export interface UserFromDb {
