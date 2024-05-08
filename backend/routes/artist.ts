@@ -47,6 +47,28 @@ artistRouter.get('/:_id', async (req, res, next) => {
   }
 });
 
+artistRouter.patch('/:id/togglePublished', auth, permit(['admin']), async (req, res,next) => {
+  try {
+    const {id} = req.params;
+    let _id: ObjectId;
+    try {
+      _id = new ObjectId(id);
+    } catch {
+      return res.status(404).send({error: 'Artist id is not an ObjectId.'});
+    }
+
+    const targetArtist = await Artist.findById(_id);
+
+    if (!targetArtist) return res.status(400).send({error: 'There is no such artist.'});
+
+    targetArtist.isPublished = !targetArtist.isPublished;
+    await targetArtist.save();
+    return res.send(targetArtist)
+  } catch (e) {
+    next(e);
+  }
+});
+
 artistRouter.delete('/:id', auth, permit(['admin']), async (req, res, next) => {
   try {
     const {id} = req.params;

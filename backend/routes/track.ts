@@ -94,6 +94,28 @@ trackRouter.get('/', async (req, res, next) => {
   }
 });
 
+trackRouter.patch('/:id/togglePublished', auth, permit(['admin']), async (req, res,next) => {
+  try {
+    const {id} = req.params;
+    let _id: ObjectId;
+    try {
+      _id = new ObjectId(id);
+    } catch {
+      return res.status(404).send({error: 'Track id is not an ObjectId.'});
+    }
+
+    const targetTrack = await Track.findById(_id);
+
+    if (!targetTrack) return res.status(400).send({error: 'There is no such track.'});
+
+    targetTrack.isPublished = !targetTrack.isPublished;
+    await targetTrack.save();
+    return res.send(targetTrack)
+  } catch (e) {
+    next(e);
+  }
+});
+
 trackRouter.delete('/:id', auth, permit(['admin']), async (req, res, next) => {
   try {
     const {id} = req.params;

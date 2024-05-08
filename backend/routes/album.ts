@@ -84,6 +84,28 @@ albumRouter.get('/:_id', async (req, res, next) => {
   }
 });
 
+albumRouter.patch('/:id/togglePublished', auth, permit(['admin']), async (req, res,next) => {
+  try {
+    const {id} = req.params;
+    let _id: ObjectId;
+    try {
+      _id = new ObjectId(id);
+    } catch {
+      return res.status(404).send({error: 'Album id is not an ObjectId.'});
+    }
+
+    const targetAlbum = await Album.findById(_id);
+
+    if (!targetAlbum) return res.status(400).send({error: 'There is no such album.'});
+
+    targetAlbum.isPublished = !targetAlbum.isPublished;
+    await targetAlbum.save();
+    return res.send(targetAlbum)
+  } catch (e) {
+    next(e);
+  }
+});
+
 albumRouter.delete('/:id', auth, permit(['admin']), async (req, res, next) => {
   try {
     const {id} = req.params;
