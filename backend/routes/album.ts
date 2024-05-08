@@ -5,10 +5,12 @@ import {AlbumWithoutId, AlbumWithTrackQuantity} from '../types';
 import mongoose from 'mongoose';
 import {ObjectId} from 'mongodb';
 import Track from '../models/track';
+import auth from '../middleware/auth';
+import permit from '../middleware/permit';
 
 const albumRouter = express.Router();
 
-albumRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
+albumRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next) => {
   try {
     const {title, artistId, year} = req.body;
     const albumData: AlbumWithoutId = {
@@ -78,6 +80,27 @@ albumRouter.get('/:_id', async (req, res, next) => {
     return res.send(targetAlbum);
   } catch (e) {
     if (e instanceof mongoose.Error.CastError) return res.status(404).send({error: 'No such album'});
+    next(e);
+  }
+});
+
+albumRouter.delete('/:id', auth, permit(['admin']), async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    let _id: ObjectId;
+    try {
+      _id = new ObjectId(id);
+    } catch {
+      return res.status(404).send({error: 'Album id is not an ObjectId.'});
+    }
+
+    const targetAlbum = await Album.findById(_id);
+    if (!targetAlbum) return res.status(400).send({error: 'There is no album to delete'});
+
+    await Album.deleteOne(_id);
+
+    return res.send({success: 'Album has been deleted.'});
+  } catch (e) {
     next(e);
   }
 });

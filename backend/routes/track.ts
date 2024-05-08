@@ -1,13 +1,16 @@
 import express from 'express';
-import {AlbumFromDB, ArtistFromDB, TrackFromDb, TrackWithoutId} from '../types';
+import {AlbumFromDB, TrackFromDb, TrackWithoutId} from '../types';
 import mongoose from 'mongoose';
 import {ObjectId} from 'mongodb';
 import Track from '../models/track';
 import Album from '../models/album';
+import auth from '../middleware/auth';
+import permit from '../middleware/permit';
+import track from '../models/track';
 
 const trackRouter = express.Router();
 
-trackRouter.post('/', async (req, res, next) => {
+trackRouter.post('/', auth, async (req, res, next) => {
   try {
     const {title, album, duration} = req.body;
 
@@ -86,6 +89,27 @@ trackRouter.get('/', async (req, res, next) => {
   try {
     const tracks: TrackFromDb[] = await Track.find().sort({indexNumber: 1});
     return res.send(tracks);
+  } catch (e) {
+    next(e);
+  }
+});
+
+trackRouter.delete('/:id', auth, permit(['admin']), async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    let _id: ObjectId;
+    try {
+      _id = new ObjectId(id);
+    } catch {
+      return res.status(404).send({error: 'Track id is not an ObjectId.'});
+    }
+
+    const targetTrack = await Track.findById(_id);
+    if (!targetTrack) return res.status(400).send({error: 'There is no track to delete'});
+
+    await track.deleteOne(_id);
+
+    return res.send({success: 'Track has been deleted.'});
   } catch (e) {
     next(e);
   }

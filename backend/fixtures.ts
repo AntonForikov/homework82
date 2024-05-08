@@ -21,56 +21,74 @@ const resetDB = async () => {
 
   for (const collection of collections) await dropCollections(db, collection);
 
-  const [artist1, artist2] = await Artist.create(
+  const [artist1, artist2, artist3] = await Artist.create(
     {
       name: 'Tool',
-      image: 'fixtureImages/tool_artist.jpeg'
+      image: 'fixtureImages/tool_artist.jpeg',
+      isPublished: true
     },
     {
       name: 'Pantera',
-      image: null
+      image: null,
+      isPublished: true
+    },
+    {
+      name: 'Red Hot Chili Peppers',
+      image: null,
+      isPublished: false
     }
   );
 
   await User.create(
     {
-      username: 'user1',
-      password: '1',
-      token: crypto.randomUUID(),
-      role: 'admin'
-    },
-    {
-      username: 'user2',
-      password: '2',
+      username: 'user',
+      password: 'user',
       token: crypto.randomUUID(),
       role: 'user'
     },
+    {
+      username: 'admin',
+      password: 'admin',
+      token: crypto.randomUUID(),
+      role: 'admin'
+    },
   )
 
-  const [album1, album2, album3, album4] = await Album.create(
+  const [album1, album2, album3, album4, album5] = await Album.create(
     {
       title: 'aenima',
       artist: artist1,
       year: 1996,
-      image: null
+      image: null,
+      isPublished: true
     },
     {
       title: '10000 Days',
       artist: artist1,
       year: 2006,
-      image: null
+      image: null,
+      isPublished: true
     },
     {
       title: 'Vulgar Display of Power',
       artist: artist2,
       year: 1992,
-      image: 'fixtureImages/vulgar_display_of_power.jpeg'
+      image: 'fixtureImages/vulgar_display_of_power.jpeg',
+      isPublished: true
     },
     {
       title: 'Far Beyond Driven',
       artist: artist2,
       year: 1994,
-      image: null
+      image: null,
+      isPublished: true
+    },
+    {
+      title: 'Stadium Arcadium',
+      artist: artist3,
+      year: 2006,
+      image: null,
+      isPublished: false
     }
   );
 
@@ -79,124 +97,165 @@ const resetDB = async () => {
       title: 'Stinkfist',
       album: album1,
       duration: '5:11',
-      indexNumber: 1
+      indexNumber: 1,
+      isPublished: true
     },
     {
       title: 'Eulogy',
       album: album1,
       duration: '8:29',
-      indexNumber: 2
+      indexNumber: 2,
+      isPublished: true
     },
     {
       title: 'H.',
       album: album1,
       duration: '6:07',
-      indexNumber: 3
+      indexNumber: 3,
+      isPublished: true
     },
     {
       title: 'Forty Six & 2',
       album: album1,
       duration: '8:29',
-      indexNumber: 5
+      indexNumber: 5,
+      isPublished: true
     },
     {
       title: 'Hooker With a Penis',
       album: album1,
       duration: '4:34',
-      indexNumber: 7
+      indexNumber: 7,
+      isPublished: true
     },
 
     {
       title: 'Vicarious',
       album: album2,
       duration: '7:06',
-      indexNumber: 1
+      indexNumber: 1,
+      isPublished: true
     },
     {
       title: 'Jambi',
       album: album2,
       duration: '7:28',
-      indexNumber: 2
+      indexNumber: 2,
+      isPublished: true
     },
     {
       title: 'Wings for Marie',
       album: album2,
       duration: '6:11',
-      indexNumber: 3
+      indexNumber: 3,
+      isPublished: true
     },
     {
       title: '10,000 Days',
       album: album2,
       duration: '11:13',
-      indexNumber: 4
+      indexNumber: 4,
+      isPublished: true
     },
     {
       title: 'The Pot',
       album: album2,
       duration: '6:21',
-      indexNumber: 5
+      indexNumber: 5,
+      isPublished: true
     },
 
     {
       title: 'Mouth for War',
       album: album3,
       duration: '3:57',
-      indexNumber: 1
+      indexNumber: 1,
+      isPublished: true
     },
     {
       title: 'A New Level',
       album: album3,
       duration: '3:57',
-      indexNumber: 2
+      indexNumber: 2,
+      isPublished: true
     },
     {
       title: 'Walk',
       album: album3,
       duration: '5:14',
-      indexNumber: 3
+      indexNumber: 3,
+      isPublished: true
     },
     {
       title: 'Fucking Hostile',
       album: album3,
       duration: '2:48',
-      indexNumber: 4
+      indexNumber: 4,
+      isPublished: true
     },
     {
       title: 'This Love',
       album: album3,
       duration: '6:32',
-      indexNumber: 5
+      indexNumber: 5,
+      isPublished: true
     },
 
     {
       title: 'Strength Beyond Strength',
       album: album4,
       duration: '3:38',
-      indexNumber: 1
+      indexNumber: 1,
+      isPublished: true
     },
     {
       title: 'Becoming',
       album: album4,
       duration: '3:05',
-      indexNumber: 2
+      indexNumber: 2,
+      isPublished: true
     },
     {
       title: '5 Minutes Alone',
       album: album4,
       duration: '5:47',
-      indexNumber: 3
+      indexNumber: 3,
+      isPublished: true
     },
     {
       title: "I'm Broken",
       album: album4,
       duration: '4:24',
-      indexNumber: 4
+      indexNumber: 4,
+      isPublished: true
     },
     {
       title: 'Good Friends and a Bottle of Pills',
       album: album4,
       duration: '2:52',
-      indexNumber: 5
+      indexNumber: 5,
+      isPublished: true
+    },
+    {
+      title: 'Charlie',
+      album: album5,
+      duration: '4:38',
+      indexNumber: 3,
+      isPublished: false
+    },
+    {
+      title: 'Hey',
+      album: album5,
+      duration: '5:40',
+      indexNumber: 14,
+      isPublished: false
+    },
+    {
+      title: 'We Believe',
+      album: album5,
+      duration: '3:36',
+      indexNumber: 26,
+      isPublished: false
     },
   );
 
