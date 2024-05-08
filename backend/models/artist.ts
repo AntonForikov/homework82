@@ -6,7 +6,12 @@ const ArtistSchema = new Schema({
     required: true
   },
   image: String || null,
-  information: String || null
+  information: String || null,
+  isPublished: {
+    type: Boolean,
+    required: true,
+    default: false
+  }
 }, {versionKey: false});
 
 const Artist = model('artist', ArtistSchema);

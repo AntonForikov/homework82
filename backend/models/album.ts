@@ -19,7 +19,12 @@ const AlbumSchema = new Schema({
     type: Number,
     required: true
   },
-  image: String || null
+  image: String || null,
+  isPublished: {
+    type: Boolean,
+    required: true,
+    default: false
+  }
 }, {versionKey: false});
 
 const Album = model('albums', AlbumSchema);
