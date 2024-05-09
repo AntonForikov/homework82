@@ -103,6 +103,7 @@ const resetDB = async () => {
   await Track.create(
     {
       title: 'Stinkfist',
+      artist: artist1,
       album: album1,
       duration: '5:11',
       indexNumber: 1,
@@ -112,6 +113,7 @@ const resetDB = async () => {
     {
       title: 'Eulogy',
       album: album1,
+      artist: artist1,
       duration: '8:29',
       indexNumber: 2,
       isPublished: true,
@@ -120,6 +122,7 @@ const resetDB = async () => {
     {
       title: 'H.',
       album: album1,
+      artist: artist1,
       duration: '6:07',
       indexNumber: 3,
       isPublished: true,
@@ -128,6 +131,7 @@ const resetDB = async () => {
     {
       title: 'Forty Six & 2',
       album: album1,
+      artist: artist1,
       duration: '8:29',
       indexNumber: 5,
       isPublished: true,
@@ -136,6 +140,7 @@ const resetDB = async () => {
     {
       title: 'Hooker With a Penis',
       album: album1,
+      artist: artist1,
       duration: '4:34',
       indexNumber: 7,
       isPublished: true,
@@ -145,6 +150,7 @@ const resetDB = async () => {
     {
       title: 'Vicarious',
       album: album2,
+      artist: artist1,
       duration: '7:06',
       indexNumber: 1,
       isPublished: true,
@@ -153,6 +159,7 @@ const resetDB = async () => {
     {
       title: 'Jambi',
       album: album2,
+      artist: artist1,
       duration: '7:28',
       indexNumber: 2,
       isPublished: true,
@@ -161,6 +168,7 @@ const resetDB = async () => {
     {
       title: 'Wings for Marie',
       album: album2,
+      artist: artist1,
       duration: '6:11',
       indexNumber: 3,
       isPublished: true,
@@ -169,6 +177,7 @@ const resetDB = async () => {
     {
       title: '10,000 Days',
       album: album2,
+      artist: artist1,
       duration: '11:13',
       indexNumber: 4,
       isPublished: true,
@@ -177,6 +186,7 @@ const resetDB = async () => {
     {
       title: 'The Pot',
       album: album2,
+      artist: artist1,
       duration: '6:21',
       indexNumber: 5,
       isPublished: true,
@@ -186,6 +196,7 @@ const resetDB = async () => {
     {
       title: 'Mouth for War',
       album: album3,
+      artist: artist2,
       duration: '3:57',
       indexNumber: 1,
       isPublished: true,
@@ -194,6 +205,7 @@ const resetDB = async () => {
     {
       title: 'A New Level',
       album: album3,
+      artist: artist2,
       duration: '3:57',
       indexNumber: 2,
       isPublished: true,
@@ -202,6 +214,7 @@ const resetDB = async () => {
     {
       title: 'Walk',
       album: album3,
+      artist: artist2,
       duration: '5:14',
       indexNumber: 3,
       isPublished: true,
@@ -210,6 +223,7 @@ const resetDB = async () => {
     {
       title: 'Fucking Hostile',
       album: album3,
+      artist: artist2,
       duration: '2:48',
       indexNumber: 4,
       isPublished: true,
@@ -218,6 +232,7 @@ const resetDB = async () => {
     {
       title: 'This Love',
       album: album3,
+      artist: artist2,
       duration: '6:32',
       indexNumber: 5,
       isPublished: true,
@@ -227,6 +242,7 @@ const resetDB = async () => {
     {
       title: 'Strength Beyond Strength',
       album: album4,
+      artist: artist2,
       duration: '3:38',
       indexNumber: 1,
       isPublished: true,
@@ -235,6 +251,7 @@ const resetDB = async () => {
     {
       title: 'Becoming',
       album: album4,
+      artist: artist2,
       duration: '3:05',
       indexNumber: 2,
       isPublished: true,
@@ -243,6 +260,7 @@ const resetDB = async () => {
     {
       title: '5 Minutes Alone',
       album: album4,
+      artist: artist2,
       duration: '5:47',
       indexNumber: 3,
       isPublished: true,
@@ -251,6 +269,7 @@ const resetDB = async () => {
     {
       title: "I'm Broken",
       album: album4,
+      artist: artist2,
       duration: '4:24',
       indexNumber: 4,
       isPublished: true,
@@ -259,6 +278,7 @@ const resetDB = async () => {
     {
       title: 'Good Friends and a Bottle of Pills',
       album: album4,
+      artist: artist2,
       duration: '2:52',
       indexNumber: 5,
       isPublished: true,
@@ -267,6 +287,7 @@ const resetDB = async () => {
     {
       title: 'Charlie',
       album: album5,
+      artist: artist3,
       duration: '4:38',
       indexNumber: 3,
       isPublished: false,
@@ -275,6 +296,7 @@ const resetDB = async () => {
     {
       title: 'Hey',
       album: album5,
+      artist: artist3,
       duration: '5:40',
       indexNumber: 14,
       isPublished: false,
@@ -283,6 +305,7 @@ const resetDB = async () => {
     {
       title: 'We Believe',
       album: album5,
+      artist: artist3,
       duration: '3:36',
       indexNumber: 26,
       isPublished: false,

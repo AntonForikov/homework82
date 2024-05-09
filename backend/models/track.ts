@@ -2,6 +2,7 @@ import {Schema, model, Types} from 'mongoose';
 import Album from './album';
 import {ObjectId} from 'mongodb';
 import User from './user';
+import Artist from './artist';
 
 const TrackSchema = new Schema({
   title: {
@@ -15,6 +16,15 @@ const TrackSchema = new Schema({
     validate: {
       validator: async (id: ObjectId) => Album.findById(id),
       message: 'Album does not exist'
+    }
+  },
+  artist: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'artist',
+    validate: {
+      validator: async (id: ObjectId) => Artist.findById(id),
+      message: 'Artist does not exist'
     }
   },
   duration: {
