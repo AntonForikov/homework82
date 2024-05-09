@@ -5,7 +5,7 @@ import {AlbumWithoutId, AlbumWithTrackQuantity} from '../types';
 import mongoose from 'mongoose';
 import {ObjectId} from 'mongodb';
 import Track from '../models/track';
-import auth from '../middleware/auth';
+import auth, {Auth} from '../middleware/auth';
 import permit from '../middleware/permit';
 
 const albumRouter = express.Router();
@@ -106,7 +106,7 @@ albumRouter.patch('/:id/togglePublished', auth, permit(['admin']), async (req, r
   }
 });
 
-albumRouter.delete('/:id', auth, permit(['admin']), async (req, res, next) => {
+albumRouter.delete('/:id', auth, async (req: Auth, res, next) => {
   try {
     const {id} = req.params;
     let _id: ObjectId;
@@ -118,6 +118,13 @@ albumRouter.delete('/:id', auth, permit(['admin']), async (req, res, next) => {
 
     const targetAlbum = await Album.findById(_id);
     if (!targetAlbum) return res.status(400).send({error: 'There is no album to delete'});
+
+    if (req.user?._id.toString() === targetAlbum.user.toString() && req.user?.role === 'user') {
+      await Album.deleteOne(_id);
+      return res.send({success: 'Album has been deleted.'});
+    }
+
+    if (req.user?.role !== 'admin') return res.status(403).send({error: 'Not authorized'});
 
     await Album.deleteOne(_id);
 
