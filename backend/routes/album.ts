@@ -121,14 +121,16 @@ albumRouter.delete('/:id', auth, async (req: Auth, res, next) => {
 
     if (req.user?._id.toString() === targetAlbum.user.toString() && req.user?.role === 'user') {
       await Album.deleteOne(_id);
-      return res.send({success: 'Album has been deleted.'});
+      await Track.deleteMany({album: _id});
+      return res.send({success: "Album and it's tracks has been deleted."});
     }
 
     if (req.user?.role !== 'admin') return res.status(403).send({error: 'Not authorized'});
 
     await Album.deleteOne(_id);
+    await Track.deleteMany({album: _id});
 
-    return res.send({success: 'Album has been deleted.'});
+    return res.send({success: "Album and it's tracks has been deleted."});
   } catch (e) {
     next(e);
   }
