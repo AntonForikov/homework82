@@ -30,9 +30,6 @@ const CardItem: React.FC<Props> = ({id, title, image, trackQuantity, releaseYear
   let cardImage = no_image_available;
 
   if (image) cardImage = `${apiUrl}/${image}`;
-
-  if (artistCard) console.log(releaseYear, trackQuantity);
-
   const onCardClick = () => {
     if (artistCard) navigate(`/artist/${id}`);
     if (albumCard) navigate(`/album/${id}`);

@@ -10,7 +10,9 @@ export interface AlbumFromDb {
   artist: string;
   year: string;
   image: string | null;
-  trackQuantity: string
+  trackQuantity: string;
+  user: string;
+  isPublished: boolean
 }
 
 export interface TrackFromDb {
@@ -82,6 +84,14 @@ export interface AlbumMutation {
   image: File | null,
   artist: string,
   year: string
+}
+
+export interface TrackMutation {
+  title: string,
+  artist: string,
+  indexNumber: string,
+  duration: string
+  album: string
 }
 
 export interface GlobalError {

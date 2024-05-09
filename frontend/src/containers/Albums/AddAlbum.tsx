@@ -16,7 +16,7 @@ import {getArtists} from '../../store/artist/artistThunk';
 import {AlbumMutation} from '../../types';
 import {useNavigate} from 'react-router-dom';
 import {addAlbum} from '../../store/album/albumThunk';
-import FileInput from '../../components/AddForm/FileInput';
+import FileInput from '../../components/InputFile/FileInput';
 import SendIcon from '@mui/icons-material/Send';
 
 const initial: AlbumMutation = {
@@ -46,7 +46,7 @@ const AddAlbum = () => {
     }
   };
 
-  const changeProductHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeAlbumHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
     setAlbum((prevState) => ({
       ...prevState,
@@ -98,7 +98,6 @@ const AddAlbum = () => {
   return (
     <Grid container direction="column" alignItems="center" mt={2}>
       <Typography variant="h4">Add New Album</Typography>
-      {/*<AddForm arrayForSelectInput={artists}/>*/}
       <form onSubmit={onFormSubmit}>
         <Grid container direction="column" spacing={2} marginBottom={2} width={500} margin="auto">
           <Grid item xs>
@@ -108,7 +107,7 @@ const AddAlbum = () => {
               label="Title"
               name="title"
               value={album.title}
-              onChange={changeProductHandler}
+              onChange={changeAlbumHandler}
               required
             />
           </Grid>
@@ -120,7 +119,7 @@ const AddAlbum = () => {
               label="Year"
               name="year"
               value={album.year}
-              onChange={changeProductHandler}
+              onChange={changeAlbumHandler}
               required
             />
           </Grid>

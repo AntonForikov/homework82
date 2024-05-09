@@ -24,11 +24,22 @@ export const getAlbums = createAsyncThunk(
     try {
       const {data} = await axiosApi.get<AlbumFromDb[]>(`/albums?artist=${id}`);
       if (data) {
-        console.log(data);
         return data;
       } else {
         return [];
       }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+);
+
+export const getAlbumsForSelect = createAsyncThunk(
+  'getAlbumsForSelect/get',
+  async (id: string) => {
+    try {
+      const {data} = await axiosApi.get<AlbumFromDb[]>(`albums?artist=${id}`);
+      return data;
     } catch (e) {
       console.error(e);
     }
