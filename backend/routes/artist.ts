@@ -7,6 +7,7 @@ import auth, {Auth} from '../middleware/auth';
 import permit from '../middleware/permit';
 import {ObjectId} from 'mongodb';
 import Album from '../models/album';
+import Track from '../models/track';
 
 const artistRouter = express.Router();
 
@@ -80,19 +81,25 @@ artistRouter.delete('/:id', auth, async (req: Auth, res, next) => {
       return res.status(404).send({error: 'Artist id is not an ObjectId.'});
     }
 
+
+
     const targetArtist = await Artist.findById(_id);
     if (!targetArtist) return res.status(400).send({error: 'There is no artist to delete'});
 
     if (req.user?._id.toString() === targetArtist.user.toString() && req.user?.role === 'user') {
-      await Album.deleteOne(_id);
-      return res.send({success: 'Artist has been deleted.'});
+      await Artist.deleteOne(_id);
+      await Album.deleteMany({artist: targetArtist._id});
+      await Track.deleteMany({artist: targetArtist._id});
+      return res.send({success: 'Artist, his albums and tracks has been deleted.'});
     }
 
     if (req.user?.role !== 'admin') return res.status(403).send({error: 'Not authorized'});
 
     await Artist.deleteOne(_id);
+    await Album.deleteMany({artist: targetArtist._id});
+    await Track.deleteMany({artist: targetArtist._id});
 
-    return res.send({success: 'Artist has been deleted.'});
+    return res.send({success: 'Artist, his albums and tracks has been deleted.'});
   } catch (e) {
     next(e);
   }
