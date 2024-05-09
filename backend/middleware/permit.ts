@@ -7,6 +7,6 @@ const permit = (roles: string[]) => {
     if (!roles.includes(req.user.role)) return res.status(403).send({error: 'Not authorized'});
     return next();
   };
-}
+};
 
 export default permit;
