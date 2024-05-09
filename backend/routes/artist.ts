@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import Artist from '../models/artist';
 import {imagesUpload} from '../multer';
-import {ArtistFromDB, ArtistWithoutId} from '../types';
+import {ArtistFromDB} from '../types';
 import auth, {Auth} from '../middleware/auth';
 import permit from '../middleware/permit';
 import {ObjectId} from 'mongodb';
@@ -11,13 +11,14 @@ import Track from '../models/track';
 
 const artistRouter = express.Router();
 
-artistRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next) => {
+artistRouter.post('/', auth, imagesUpload.single('image'), async (req: Auth, res, next) => {
   try {
     const {name, information} = req.body;
-    const artistData: ArtistWithoutId = {
+    const artistData = {
       name: name,
       information: information && information.trim() !== '' ? information.trim() : null,
-      image: req.file ? req.file.filename : null
+      image: req.file ? req.file.filename : null,
+      user: req.user?._id
     }
 
     const artist = new Artist(artistData);

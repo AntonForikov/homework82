@@ -40,18 +40,21 @@ const resetDB = async () => {
     {
       name: 'Tool',
       image: 'fixtureImages/tool_artist.jpeg',
+      information: null,
       isPublished: true,
       user: user1
     },
     {
       name: 'Pantera',
       image: null,
+      information: 'Some information about Pantera',
       isPublished: true,
       user: user2
     },
     {
       name: 'Red Hot Chili Peppers',
       image: null,
+      information: null,
       isPublished: false,
       user: user1
     }
