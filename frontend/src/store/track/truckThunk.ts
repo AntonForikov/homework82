@@ -1,6 +1,17 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi';
-import {TrackFromDb, TrackHistory} from '../../types';
+import {TrackFromDb, TrackHistory, TrackMutation} from '../../types';
+
+export const addTrack = createAsyncThunk(
+  'addTrack/post',
+  async (track: TrackMutation) => {
+    try {
+      axiosApi.post('/tracks', track);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+);
 
 export const getTracks = createAsyncThunk(
   'getTracks/get',

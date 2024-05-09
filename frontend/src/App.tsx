@@ -11,6 +11,7 @@ import AddAlbum from './containers/Albums/AddAlbum';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import {useAppSelector} from './app/hooks';
 import {selectUser} from './store/user/userSlice';
+import AddTrack from './containers/Tracks/AddTrack';
 function App() {
   const user = useAppSelector(selectUser);
   return (
@@ -22,12 +23,21 @@ function App() {
         <Container maxWidth='xl'>
           <Routes>
             <Route path='/' element={<Home/>}/>
-            <Route path='/trackHistory' element={<TrackHistory />}/>
+            <Route path='/trackHistory' element={
+              <ProtectedRoute isAllowed={Boolean(user)}>
+                <TrackHistory />
+              </ProtectedRoute>
+            }/>
             <Route path='artist/:id' element={<Albums/>}/>
             <Route path='album/:albumId' element={<Tracks/>}/>
             <Route path='/newAlbum' element={
               <ProtectedRoute isAllowed={Boolean(user)}>
                 <AddAlbum/>
+              </ProtectedRoute>
+            }/>
+            <Route path='/newTrack' element={
+              <ProtectedRoute isAllowed={Boolean(user)}>
+                <AddTrack/>
               </ProtectedRoute>
             }/>
             <Route path='/register' element={<Register />}/>

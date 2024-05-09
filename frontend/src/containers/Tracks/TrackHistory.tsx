@@ -18,7 +18,7 @@ const TrackHistory: React.FC = () => {
 
 
   useEffect(() => {
-    if (!user) return navigate('/');
+    // if (!user) return navigate('/');
     if (user?.token) dispatch(getUserTracksHistory(user?.token));
   }, [dispatch, user?.token, navigate, user]);
 
