@@ -10,14 +10,15 @@ import permit from '../middleware/permit';
 
 const albumRouter = express.Router();
 
-albumRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next) => {
+albumRouter.post('/', auth, imagesUpload.single('image'), async (req: Auth, res, next) => {
   try {
-    const {title, artistId, year} = req.body;
-    const albumData: AlbumWithoutId = {
+    const {title, artist, year} = req.body;
+    const albumData = {
       title: title,
-      artist: artistId,
+      artist: artist,
       year: year,
-      image: req.file ? req.file.filename : null
+      image: req.file ? req.file.filename : null,
+      user: req.user?._id
     }
 
     const album = new Album(albumData);
