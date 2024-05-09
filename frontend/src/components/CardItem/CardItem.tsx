@@ -14,10 +14,10 @@ interface Props {
   id: string,
   title: string,
   image: string | null,
-  releaseYear?: string
+  releaseYear?: string,
   trackQuantity?: string,
-  albumCard?: boolean,
-  trackCard?: boolean
+  artistCard?: boolean,
+  albumCard?: boolean
 }
 
 const ImageCardMedia = styled(CardMedia)({
@@ -25,15 +25,17 @@ const ImageCardMedia = styled(CardMedia)({
   paddingTop: '56.25%'
 });
 
-const CardItem: React.FC<Props> = ({id, title, image, trackQuantity, releaseYear, albumCard = false, trackCard = false}) => {
+const CardItem: React.FC<Props> = ({id, title, image, trackQuantity, releaseYear, artistCard = false, albumCard = false}) => {
   const navigate = useNavigate();
   let cardImage = no_image_available;
 
   if (image) cardImage = `${apiUrl}/${image}`;
 
+  if (artistCard) console.log(releaseYear, trackQuantity);
+
   const onCardClick = () => {
-    if (albumCard) navigate(`/artist/${id}`);
-    if (trackCard) navigate(`/album/${id}`);
+    if (artistCard) navigate(`/artist/${id}`);
+    if (albumCard) navigate(`/album/${id}`);
   };
 
   return (
@@ -41,7 +43,7 @@ const CardItem: React.FC<Props> = ({id, title, image, trackQuantity, releaseYear
       <Card>
         <CardHeader title={title} sx={{textAlign: 'center'}}/>
         <ImageCardMedia image={cardImage} title={title}/>
-        {(trackQuantity && releaseYear) &&
+        {albumCard &&
           <CardContent>
             <Typography>
               Release: {releaseYear}

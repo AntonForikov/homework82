@@ -42,7 +42,7 @@ const Albums = () => {
                   image={album.image}
                   trackQuantity={album.trackQuantity}
                   releaseYear={album.year}
-                  trackCard
+                  albumCard
                 />
               );
             })

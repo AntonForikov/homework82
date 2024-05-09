@@ -47,6 +47,7 @@ export interface UserFromDb {
   _id: string;
   username: string;
   token: string;
+  role: string
 }
 
 export interface RegisterResponse {
@@ -74,6 +75,13 @@ export interface RegisterMutation {
 export interface LoginMutation {
   username: string;
   password: string;
+}
+
+export interface AlbumMutation {
+  title: string,
+  image: File | null,
+  artist: string,
+  year: string
 }
 
 export interface GlobalError {

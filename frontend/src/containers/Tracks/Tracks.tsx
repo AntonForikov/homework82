@@ -39,7 +39,7 @@ const Tracks = () => {
             {loading
               ? <Grid container justifyContent='center' mt={2}><CircularProgress/></Grid>
               : !loading && trackList.length < 1
-                ? <Alert severity="warning">There is no tracks with such artist and album in database</Alert>
+                ? <Alert severity="warning" sx={{marginTop: 3}}>There are no tracks with such album in database</Alert>
                 : trackList.map((track) => {
                   return <TrackItem
                     key={track._id}

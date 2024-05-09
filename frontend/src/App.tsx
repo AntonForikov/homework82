@@ -7,7 +7,12 @@ import Register from './containers/User/Register';
 import Login from './containers/User/Login';
 import Container from '@mui/material/Container';
 import TrackHistory from './containers/Tracks/TrackHistory';
+import AddAlbum from './containers/Albums/AddAlbum';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import {useAppSelector} from './app/hooks';
+import {selectUser} from './store/user/userSlice';
 function App() {
+  const user = useAppSelector(selectUser);
   return (
     <>
       <header>
@@ -20,6 +25,11 @@ function App() {
             <Route path='/trackHistory' element={<TrackHistory />}/>
             <Route path='artist/:id' element={<Albums/>}/>
             <Route path='album/:albumId' element={<Tracks/>}/>
+            <Route path='/newAlbum' element={
+              <ProtectedRoute isAllowed={Boolean(user)}>
+                <AddAlbum/>
+              </ProtectedRoute>
+            }/>
             <Route path='/register' element={<Register />}/>
             <Route path='/login' element={<Login />}/>
             <Route path="*" element={<h1>Not found</h1>}/>

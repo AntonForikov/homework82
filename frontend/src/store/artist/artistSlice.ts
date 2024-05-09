@@ -20,9 +20,9 @@ const artistSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getArtists.pending, (state) => {
       state.artistLoading = true;
-    }).addCase(getArtists.fulfilled, (state, {payload: albumList}) => {
+    }).addCase(getArtists.fulfilled, (state, {payload: artistList}) => {
       state.artistLoading = false;
-      if (albumList) state.artistList = albumList;
+      if (artistList) state.artistList = artistList;
     }).addCase(getArtists.rejected, (state) => {
       state.artistLoading = false;
     });
