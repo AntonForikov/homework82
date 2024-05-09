@@ -34,7 +34,7 @@ albumRouter.post('/', auth, imagesUpload.single('image'), async (req: Auth, res,
 albumRouter.get('/', async (req, res, next) => {
   const {artist} = req.query;
 
-  if(artist && typeof artist === 'string') {
+  if(typeof artist === 'string') {
     try {
       let _id: ObjectId;
       try {

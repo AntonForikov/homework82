@@ -10,15 +10,18 @@ import track from '../models/track';
 
 const trackRouter = express.Router();
 
-trackRouter.post('/', auth, async (req, res, next) => {
+trackRouter.post('/', auth, async (req: Auth, res, next) => {
   try {
-    const {title, album, duration} = req.body;
+    const {title, album, duration, indexNumber, artist} = req.body;
 
 
-    const trackData: TrackWithoutId = {
+    const trackData = {
       title: title,
       album: album,
-      duration: duration
+      duration: duration,
+      indexNumber: indexNumber,
+      artist: artist,
+      user: req.user?._id
     }
 
     const track = new Track(trackData);
@@ -87,7 +90,7 @@ trackRouter.get('/', async (req, res, next) => {
   }
 
   try {
-    const tracks: TrackFromDb[] = await Track.find().sort({indexNumber: 1});
+    const tracks = await Track.find().sort({indexNumber: 1});
     return res.send(tracks);
   } catch (e) {
     next(e);

@@ -29,6 +29,9 @@ export interface TrackFromDb {
   title: string;
   album: ObjectId;
   duration: string | null;
+  indexNumber: string;
+  artist: ObjectId;
+  user: ObjectId;
 }
 
 export type TrackWithoutId = Omit<TrackFromDb, '_id'>
