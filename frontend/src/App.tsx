@@ -12,6 +12,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import {useAppSelector} from './app/hooks';
 import {selectUser} from './store/user/userSlice';
 import AddTrack from './containers/Tracks/AddTrack';
+import AddArtist from './containers/Artist/AddArtist';
 function App() {
   const user = useAppSelector(selectUser);
   return (
@@ -38,6 +39,11 @@ function App() {
             <Route path='/newTrack' element={
               <ProtectedRoute isAllowed={Boolean(user)}>
                 <AddTrack/>
+              </ProtectedRoute>
+            }/>
+            <Route path='/newArtist' element={
+              <ProtectedRoute isAllowed={Boolean(user)}>
+                <AddArtist/>
               </ProtectedRoute>
             }/>
             <Route path='/register' element={<Register />}/>
