@@ -99,7 +99,7 @@ const resetDB = async () => {
       year: 2006,
       image: null,
       isPublished: false,
-      user: user2
+      user: user1
     }
   );
 
@@ -303,7 +303,7 @@ const resetDB = async () => {
       duration: '5:40',
       indexNumber: 14,
       isPublished: false,
-      user: user2
+      user: user1
     },
     {
       title: 'We Believe',
@@ -312,7 +312,7 @@ const resetDB = async () => {
       duration: '3:36',
       indexNumber: 26,
       isPublished: false,
-      user: user2
+      user: user1
     },
   );
 
