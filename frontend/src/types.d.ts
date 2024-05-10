@@ -2,6 +2,8 @@ export interface ArtistFromDb {
   _id: string;
   name: string;
   image: string | null;
+  isPublished: boolean;
+  user: string;
 }
 
 export interface AlbumFromDb {
@@ -27,7 +29,9 @@ export interface TrackFromDb {
     }
   };
   duration: string;
-  indexNumber: string
+  indexNumber: string;
+  isPublished: boolean;
+  user: string;
 }
 
 export interface TrackHistory {

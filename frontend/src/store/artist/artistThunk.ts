@@ -21,13 +21,10 @@ export const getArtists = createAsyncThunk(
   async () => {
     try {
       const {data} = await axiosApi.get<ArtistFromDb[]>('/artists');
-      if (data) {
-        return data;
-      } else {
-        return [];
-      }
+      return data;
     } catch (e) {
       console.error(e);
+      return [];
     }
   }
 );

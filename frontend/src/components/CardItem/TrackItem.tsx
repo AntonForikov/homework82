@@ -1,10 +1,12 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-import {Paper} from '@mui/material';
+import {Grid, Paper, Typography} from '@mui/material';
 import {useAppSelector} from '../../app/hooks';
 import {selectUser} from '../../store/user/userSlice';
 import axiosApi from '../../axiosApi';
+import DoneIcon from '@mui/icons-material/Done';
+import UnpublishedIcon from '@mui/icons-material/Unpublished';
 
 interface Props {
   trackId: string;
@@ -12,9 +14,10 @@ interface Props {
   title: string;
   duration: string;
   artistId: string;
+  isPublished: boolean;
 }
 
-const TrackItem: React.FC<Props> = ({trackId, indexNumber, title, duration, artistId}) => {
+const TrackItem: React.FC<Props> = ({trackId, indexNumber, title, duration, artistId, isPublished}) => {
   const user = useAppSelector(selectUser);
 
   const sendTrack = async () => {
@@ -45,7 +48,15 @@ const TrackItem: React.FC<Props> = ({trackId, indexNumber, title, duration, arti
           onClick={sendTrack}
         />
       </Box>
-      <Box>{duration}</Box>
+      <Box>
+        <Grid container justifyContent='flex-end' padding={1}>
+          {isPublished
+            ? <><Typography color='green' marginRight={1}>Published</Typography> <DoneIcon color='success' sx={{marginRight: 1}}/>{duration}</>
+            : <><Typography color='red' marginRight={1}>Unpublished</Typography><UnpublishedIcon color='error' sx={{marginRight: 1}}/>{duration}</>
+          }
+        </Grid>
+        {/*{duration}*/}
+      </Box>
     </Paper>
   );
 };

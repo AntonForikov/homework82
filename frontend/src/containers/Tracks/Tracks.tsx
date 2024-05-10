@@ -23,37 +23,52 @@ const Tracks = () => {
     }
   }, [dispatch, albumId]);
 
-  useEffect( () => {
+  useEffect(() => {
     void getAlbum();
   }, [getAlbum]);
 
   return (
     <>
       {user
-        ?<Grid container  justifyContent="center" alignItems="center" gap={3}>
+        ? <Grid container justifyContent="center" alignItems="center" gap={3}>
           {
             (albumInfo.artist !== '' && albumInfo.title !== '')
-            && <Grid container justifyContent='center' marginTop={3}><Typography variant="h4">{albumInfo.artist}: {albumInfo.title}</Typography></Grid>
+            && <Grid container justifyContent="center" marginTop={3}><Typography
+              variant="h4">{albumInfo.artist}: {albumInfo.title}</Typography></Grid>
           }
-          <Grid container direction='column' maxWidth='md'>
+          <Grid container direction="column" maxWidth="md">
             {loading
-              ? <Grid container justifyContent='center' mt={2}><CircularProgress/></Grid>
+              ? <Grid container justifyContent="center" mt={2}><CircularProgress/></Grid>
               : !loading && trackList.length < 1
                 ? <Alert severity="warning" sx={{marginTop: 3}}>There are no tracks with such album in database</Alert>
                 : trackList.map((track) => {
-                  return <TrackItem
-                    key={track._id}
-                    trackId={track._id}
-                    title={track.title}
-                    indexNumber={track.indexNumber}
-                    duration={track.duration}
-                    artistId={track.album.artist._id}
-                  />;
+                  return (track.isPublished || user?._id === track.user ?
+                      <TrackItem
+                        key={track._id}
+                        trackId={track._id}
+                        title={track.title}
+                        indexNumber={track.indexNumber}
+                        duration={track.duration}
+                        artistId={track.album.artist._id}
+                        isPublished={track.isPublished}
+                      />
+                      : user.role === 'admin' &&
+                      <TrackItem
+                        key={track._id}
+                        trackId={track._id}
+                        title={track.title}
+                        indexNumber={track.indexNumber}
+                        duration={track.duration}
+                        artistId={track.album.artist._id}
+                        isPublished={track.isPublished}
+                      />
+                  );
                 })
             }
           </Grid>
         </Grid>
-        : <Alert severity='error' onClick={() => navigate('/login')} sx={{mt: 2, cursor: 'pointer'}}>Please Login before you listen track</Alert>
+        : <Alert severity="error" onClick={() => navigate('/login')} sx={{mt: 2, cursor: 'pointer'}}>Please Login before
+          you listen track</Alert>
       }
     </>
 

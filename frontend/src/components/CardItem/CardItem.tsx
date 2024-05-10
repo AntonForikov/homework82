@@ -5,6 +5,8 @@ import {
   Grid,
   styled, Typography,
 } from '@mui/material';
+import DoneIcon from '@mui/icons-material/Done';
+import UnpublishedIcon from '@mui/icons-material/Unpublished';
 import no_image_available from '../../../assets/no_image_available.png';
 import React from 'react';
 import {apiUrl} from '../../constants';
@@ -17,7 +19,8 @@ interface Props {
   releaseYear?: string,
   trackQuantity?: string,
   artistCard?: boolean,
-  albumCard?: boolean
+  albumCard?: boolean,
+  isPublished: boolean
 }
 
 const ImageCardMedia = styled(CardMedia)({
@@ -25,7 +28,16 @@ const ImageCardMedia = styled(CardMedia)({
   paddingTop: '56.25%'
 });
 
-const CardItem: React.FC<Props> = ({id, title, image, trackQuantity, releaseYear, artistCard = false, albumCard = false}) => {
+const CardItem: React.FC<Props> = ({
+  id,
+  title,
+  image,
+  trackQuantity,
+  releaseYear,
+  artistCard = false,
+  albumCard = false,
+  isPublished
+}) => {
   const navigate = useNavigate();
   let cardImage = no_image_available;
 
@@ -38,6 +50,12 @@ const CardItem: React.FC<Props> = ({id, title, image, trackQuantity, releaseYear
   return (
     <Grid item xs md={3} lg={3} sx={{cursor: 'pointer'}} onClick={onCardClick}>
       <Card>
+        <Grid container justifyContent='flex-end' padding={1}>
+          {isPublished
+            ? <><Typography color='green' marginRight={1}>Published</Typography> <DoneIcon color='success'/></>
+            : <><Typography color='red' marginRight={1}>Unpublished</Typography><UnpublishedIcon color='error'/></>
+          }
+        </Grid>
         <CardHeader title={title} sx={{textAlign: 'center'}}/>
         <ImageCardMedia image={cardImage} title={title}/>
         {albumCard &&
