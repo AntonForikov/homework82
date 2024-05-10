@@ -80,6 +80,8 @@ const AddAlbum = () => {
 
   const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (album.title[0] === ' ') return alert('Title can not begin from whitespace.');
+
     try {
       setDisabler(true);
       await dispatch(addAlbum(album));

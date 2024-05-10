@@ -61,6 +61,9 @@ const AddTrack = () => {
 
   const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (track.title[0] === ' ') return alert('Title can not begin from whitespace.');
+    if (track.duration[0] === ' ') return alert('Duration can not begin from whitespace.');
+
     try {
       setDisabler(true);
       await dispatch(addTrack(track));

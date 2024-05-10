@@ -63,10 +63,11 @@ const AddArtist = () => {
 
   const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (artist.name[0] === ' ') return alert('Name can not begin from whitespace.');
+    if (artist.information[0] === ' ') return alert('Information can not begin from whitespace.');
     try {
       setDisabler(true);
       await dispatch(addArtist(artist));
-      setDisabler(false);
       navigate('/');
     } catch (e) {
       console.error(e);
@@ -74,6 +75,7 @@ const AddArtist = () => {
       resetFileInput();
       setArtist(initial);
       setFileName('');
+      setDisabler(false);
     }
   };
 
