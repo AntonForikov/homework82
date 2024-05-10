@@ -18,13 +18,11 @@ export const getTracks = createAsyncThunk(
   async (id: string) => {
     try {
       const {data} = await axiosApi.get<TrackFromDb[]>(`/tracks?album=${id}`);
-      if (data) {
-        return data;
-      } else {
-        return [];
-      }
+      if (!data) return [];
+      return data;
     } catch (e) {
       console.error(e);
+      return [];
     }
   }
 );

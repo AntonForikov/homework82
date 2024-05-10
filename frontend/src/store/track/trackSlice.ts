@@ -34,7 +34,7 @@ const trackSlice = createSlice({
       state.trackLoading = true;
     }).addCase(getTracks.fulfilled, (state, {payload: trackList}) => {
       state.trackLoading = false;
-      if (trackList) {
+      if (trackList.length > 0) {
         state.trackList = trackList;
         state.albumInfo.artist = trackList[0].album.artist.name;
         state.albumInfo.title = trackList[0].album.title;

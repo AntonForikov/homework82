@@ -33,6 +33,7 @@ const Home = () => {
                     title={artist.name}
                     image={artist.image}
                     isPublished={artist.isPublished}
+                    createdUser={artist.user}
                     artistCard
                   />
                   : user?.role === 'admin'
@@ -42,6 +43,7 @@ const Home = () => {
                     title={artist.name}
                     image={artist.image}
                     isPublished={artist.isPublished}
+                    createdUser={artist.user}
                     artistCard
                   />
               );

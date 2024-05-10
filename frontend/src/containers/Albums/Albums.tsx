@@ -45,6 +45,8 @@ const Albums = () => {
                     trackQuantity={album.trackQuantity}
                     releaseYear={album.year}
                     isPublished={album.isPublished}
+                    paramId={id}
+                    createdUser={album.user}
                     albumCard
                   />
                   : user?.role === 'admin'
@@ -55,6 +57,8 @@ const Albums = () => {
                     image={album.image}
                     trackQuantity={album.trackQuantity}
                     releaseYear={album.year}
+                    paramId={id}
+                    createdUser={album.user}
                     isPublished={album.isPublished}
                     albumCard
                   />

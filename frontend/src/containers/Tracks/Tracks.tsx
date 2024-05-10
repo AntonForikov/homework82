@@ -27,6 +27,7 @@ const Tracks = () => {
     void getAlbum();
   }, [getAlbum]);
 
+
   return (
     <>
       {user
@@ -39,7 +40,7 @@ const Tracks = () => {
           <Grid container direction="column" maxWidth="md">
             {loading
               ? <Grid container justifyContent="center" mt={2}><CircularProgress/></Grid>
-              : !loading && trackList.length < 1
+              : !loading && trackList.length === 0
                 ? <Alert severity="warning" sx={{marginTop: 3}}>There are no tracks with such album in database</Alert>
                 : trackList.map((track) => {
                   return (track.isPublished || user?._id === track.user ?
@@ -51,6 +52,8 @@ const Tracks = () => {
                         duration={track.duration}
                         artistId={track.album.artist._id}
                         isPublished={track.isPublished}
+                        createdUser={track.user}
+                        albumId={albumId}
                       />
                       : user.role === 'admin' &&
                       <TrackItem
@@ -61,6 +64,8 @@ const Tracks = () => {
                         duration={track.duration}
                         artistId={track.album.artist._id}
                         isPublished={track.isPublished}
+                        createdUser={track.user}
+                        albumId={albumId}
                       />
                   );
                 })

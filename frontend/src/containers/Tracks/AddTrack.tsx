@@ -137,7 +137,7 @@ const AddTrack = () => {
           {albums.length > 0 && track.artist.length > 0 &&
             <Grid item xs>
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Artist</InputLabel>
+                <InputLabel id="demo-simple-select-label">Album</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
