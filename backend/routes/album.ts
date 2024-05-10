@@ -1,7 +1,7 @@
 import express from 'express';
 import {imagesUpload} from '../multer';
 import Album from '../models/album';
-import {AlbumWithoutId, AlbumWithTrackQuantity} from '../types';
+import { AlbumWithTrackQuantity} from '../types';
 import mongoose from 'mongoose';
 import {ObjectId} from 'mongodb';
 import Track from '../models/track';
@@ -56,7 +56,9 @@ albumRouter.get('/', async (req, res, next) => {
           artist: album.artist,
           year: album.year,
           image: album.image,
+          isPublished: album.isPublished,
           trackQuantity: albumTracks.length,
+          user: album.user
         });
       }
 

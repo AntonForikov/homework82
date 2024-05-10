@@ -16,6 +16,8 @@ export interface AlbumFromDB {
   artist: ObjectId;
   year: number;
   image?: string | null;
+  isPublished: boolean;
+  user: ObjectId
 }
 
 export interface AlbumWithTrackQuantity extends AlbumFromDB {
