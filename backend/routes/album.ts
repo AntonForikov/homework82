@@ -1,7 +1,7 @@
 import express from 'express';
 import {imagesUpload} from '../multer';
 import Album from '../models/album';
-import { AlbumWithTrackQuantity} from '../types';
+import {AlbumWithTrackQuantity} from '../types';
 import mongoose from 'mongoose';
 import {ObjectId} from 'mongodb';
 import Track from '../models/track';

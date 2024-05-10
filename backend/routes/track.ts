@@ -1,5 +1,5 @@
 import express from 'express';
-import {AlbumFromDB, TrackFromDb, TrackWithoutId} from '../types';
+import {AlbumFromDB, TrackFromDb} from '../types';
 import mongoose from 'mongoose';
 import {ObjectId} from 'mongodb';
 import Track from '../models/track';
@@ -133,8 +133,8 @@ trackRouter.delete('/:id', auth, async (req: Auth, res, next) => {
     if (!targetTrack) return res.status(400).send({error: 'There is no track to delete'})
 
     if (req.user?._id.toString() === targetTrack.user.toString() && req.user?.role === 'user') {
-      await Album.deleteOne(_id);
-      return res.send({success: 'Track has been deleted.'});
+      await Track.deleteOne(_id);
+      return res.send({success: 'Track has been deleted.!!!!!'});
     }
 
     if (req.user?.role !== 'admin') return res.status(403).send({error: 'Not authorized'});
