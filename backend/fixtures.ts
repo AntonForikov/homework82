@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import config from './config';
-import Artist from './models/artist';
-import Album from './models/album';
-import Track from './models/track';
-import User from './models/user';
+import Artist from './models/Artist';
+import Album from './models/Album';
+import Track from './models/Track';
+import User from './models/User';
 
 const dropCollections = async (db: mongoose.Connection, collectionName: string) => {
   try {

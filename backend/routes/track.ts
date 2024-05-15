@@ -2,11 +2,11 @@ import express from 'express';
 import {AlbumFromDB, TrackFromDb} from '../types';
 import mongoose from 'mongoose';
 import {ObjectId} from 'mongodb';
-import Track from '../models/track';
-import Album from '../models/album';
+import Track from '../models/Track';
+import Album from '../models/Album';
 import auth, {Auth} from '../middleware/auth';
 import permit from '../middleware/permit';
-import track from '../models/track';
+import track from '../models/Track';
 
 const trackRouter = express.Router();
 
@@ -79,7 +79,6 @@ trackRouter.get('/', async (req, res, next) => {
           select: 'name _id',
         }
       }
-
 
       const tracks = await Track.find({album: _id}).sort({indexNumber: 1}).populate(populationSchema);
       if (tracks.length === 0) return res.status(404).send({error: 'There is no tracks with such album.'});

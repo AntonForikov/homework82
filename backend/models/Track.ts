@@ -1,8 +1,8 @@
 import {Schema, model, Types} from 'mongoose';
-import Album from './album';
+import Album from './Album';
 import {ObjectId} from 'mongodb';
-import User from './user';
-import Artist from './artist';
+import User from './User';
+import Artist from './Artist';
 
 const TrackSchema = new Schema({
   title: {

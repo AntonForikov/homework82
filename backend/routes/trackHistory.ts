@@ -1,7 +1,7 @@
 import express from 'express';
 import {ObjectId} from 'mongodb';
 import {TrackHistoryWithoutId} from '../types';
-import TrackHistory from '../models/trackHistory';
+import TrackHistory from '../models/TrackHistory';
 import mongoose from 'mongoose';
 import auth, {Auth} from '../middleware/auth';
 
@@ -39,7 +39,6 @@ trackHistoryRoute.post('/', auth, async (req: Auth, res, next) => {
 
 trackHistoryRoute.get('/', auth, async (req: Auth, res, next) => {
   try {
-    const populationSchema = {path: 'track', select: 'title'}
     const targetTracks = await TrackHistory
       .find({user: req.user?._id})
       .sort({date: -1})

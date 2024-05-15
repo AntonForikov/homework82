@@ -1,5 +1,5 @@
 import {Schema, model, Types} from 'mongoose';
-import User from './user';
+import User from './User';
 
 const ArtistSchema = new Schema({
   name: {

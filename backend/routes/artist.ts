@@ -1,13 +1,13 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import Artist from '../models/artist';
+import Artist from '../models/Artist';
 import {imagesUpload} from '../multer';
 import {ArtistFromDB} from '../types';
 import auth, {Auth} from '../middleware/auth';
 import permit from '../middleware/permit';
 import {ObjectId} from 'mongodb';
-import Album from '../models/album';
-import Track from '../models/track';
+import Album from '../models/Album';
+import Track from '../models/Track';
 
 const artistRouter = express.Router();
 

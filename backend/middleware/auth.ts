@@ -1,7 +1,7 @@
 import {NextFunction, Request, Response} from 'express';
 import {HydratedDocument} from 'mongoose';
 import {UserFromDb} from '../types';
-import User from '../models/user';
+import User from '../models/User';
 
 export interface Auth extends Request{
   user?: HydratedDocument<UserFromDb>

@@ -1,6 +1,6 @@
 import {Schema, model, Types} from 'mongoose';
-import Artist from './artist';
-import User from './user';
+import Artist from './Artist';
+import User from './User';
 
 const AlbumSchema = new Schema({
   title: {

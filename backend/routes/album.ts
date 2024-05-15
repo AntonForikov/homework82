@@ -1,10 +1,10 @@
 import express from 'express';
 import {imagesUpload} from '../multer';
-import Album from '../models/album';
+import Album from '../models/Album';
 import {AlbumWithTrackQuantity} from '../types';
 import mongoose from 'mongoose';
 import {ObjectId} from 'mongodb';
-import Track from '../models/track';
+import Track from '../models/Track';
 import auth, {Auth} from '../middleware/auth';
 import permit from '../middleware/permit';
 

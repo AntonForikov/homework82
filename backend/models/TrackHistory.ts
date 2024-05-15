@@ -1,7 +1,7 @@
 import {Schema, model} from 'mongoose';
-import User from './user';
-import Track from './track';
-import Artist from './artist';
+import User from './User';
+import Track from './Track';
+import Artist from './Artist';
 
 const trackHistorySchema = new Schema({
   user: {
