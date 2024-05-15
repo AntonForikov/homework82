@@ -13,11 +13,12 @@ import Container from '@mui/material/Container';
 import {Link as RouterLink, useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {selectLoginError, selectLoginLoading} from '../../store/user/userSlice';
-import {login} from '../../store/user/userThunk';
+import {googleLogin, login} from '../../store/user/userThunk';
 import {Alert, CircularProgress} from '@mui/material';
+import {GoogleLogin} from '@react-oauth/google';
 
 const initialFields = {
-  username: '',
+  email: '',
   password: ''
 };
 const Login = () => {
@@ -41,6 +42,11 @@ const Login = () => {
     navigate('/');
   };
 
+  const googleLoginHandler = async (credential: string) => {
+    await dispatch(googleLogin(credential)).unwrap();
+    navigate('/');
+  }
+
   return (
     <>
       {loginLoading
@@ -63,13 +69,21 @@ const Login = () => {
             {error &&
               <Alert severity="error" sx={{mt: 5, width: '100%'}}>{error.error}</Alert>
             }
+            <Box sx={{pt: 2}}>
+              <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                  if (credentialResponse.credential) void googleLoginHandler(credentialResponse.credential);
+                }}
+                onError={() => console.log('Login error.')}
+              />
+            </Box>
             <Box component="form" onSubmit={submitFormHandler} sx={{mt: 1}}>
               <TextField
                 margin="normal"
                 fullWidth
-                label="Username"
-                name="username"
-                value={user.username}
+                label="Email"
+                name="email"
+                value={user.email}
                 onChange={changeEventHandler}
                 autoFocus
               />

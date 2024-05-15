@@ -51,9 +51,11 @@ export interface TrackHistory {
 
 export interface UserFromDb {
   _id: string;
-  username: string;
+  email: string;
   token: string;
-  role: string
+  role: string;
+  displayName: string
+  image: string
 }
 
 export interface RegisterResponse {
@@ -74,12 +76,13 @@ export interface ValidationError {
 }
 
 export interface RegisterMutation {
-  username: string;
+  email: string;
   password: string;
+  displayName: string
 }
 
 export interface LoginMutation {
-  username: string;
+  email: string;
   password: string;
 }
 

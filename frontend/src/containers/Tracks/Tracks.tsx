@@ -33,7 +33,7 @@ const Tracks = () => {
       {user
         ? <Grid container justifyContent="center" alignItems="center" gap={3}>
           {
-            (albumInfo.artist !== '' && albumInfo.title !== '')
+            (albumInfo.artist !== '' && albumInfo.title !== '' && trackList.length !== 0)
             && <Grid container justifyContent="center" marginTop={3}><Typography
               variant="h4">{albumInfo.artist}: {albumInfo.title}</Typography></Grid>
           }
