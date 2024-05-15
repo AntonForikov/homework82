@@ -5,15 +5,15 @@ import bcrypt from 'bcrypt';
 const SALT_WORK_FACTOR = 10;
 
 const UserSchema = new Schema<UserFields, UserModel, UserMethods>({
-  username: {
+  email: {
     type: String,
     required: true,
     unique: true,
     validate: {
-      validator: async function (this: HydratedDocument<UserFields> ,username: string): Promise<boolean> {
-        if (!this.isModified('username')) return true;
+      validator: async function (this: HydratedDocument<UserFields> ,email: string): Promise<boolean> {
+        if (!this.isModified('email')) return true;
 
-        const user: HydratedDocument<UserFields> | null = await User.findOne({username});
+        const user: HydratedDocument<UserFields> | null = await User.findOne({email});
         return !Boolean(user);
       },
       message: 'This user already exist'
@@ -32,7 +32,13 @@ const UserSchema = new Schema<UserFields, UserModel, UserMethods>({
     required: true,
     enum: ['admin', 'user'],
     default: 'user'
-  }
+  },
+  displayName: {
+    type: String,
+    required: true
+  },
+  googleID: String || null,
+  image: String || null
 }, {versionKey: false});
 
 UserSchema.methods.checkPassword = function (password: string) {

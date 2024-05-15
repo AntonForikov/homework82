@@ -23,16 +23,22 @@ const resetDB = async () => {
 
   const [user1, user2] = await User.create(
     {
-      username: 'user',
+      email: 'user@gmail.com',
       password: 'user',
       token: crypto.randomUUID(),
-      role: 'user'
+      role: 'user',
+      image: null,
+      googleID: null,
+      displayName: 'user'
     },
     {
-      username: 'admin',
+      email: 'admin@gmail.com',
       password: 'admin',
       token: crypto.randomUUID(),
-      role: 'admin'
+      role: 'admin',
+      image: null,
+      googleID: null,
+      displayName: 'admin'
     },
   )
 

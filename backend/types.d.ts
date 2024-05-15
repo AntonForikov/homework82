@@ -39,10 +39,13 @@ export interface TrackFromDb {
 export type TrackWithoutId = Omit<TrackFromDb, '_id'>
 
 export interface UserFields {
-  username: string;
+  email: string;
   password: string;
   token: string;
   role: string;
+  displayName?: string,
+  googleID?: string
+  image?: string
 }
 
 export interface UserFromDb extends UserFields {
