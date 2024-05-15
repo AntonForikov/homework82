@@ -16,14 +16,9 @@ export const addTrack = createAsyncThunk(
 export const getTracks = createAsyncThunk(
   'getTracks/get',
   async (id: string) => {
-    try {
-      const {data} = await axiosApi.get<TrackFromDb[]>(`/tracks?album=${id}`);
-      if (!data) return [];
-      return data;
-    } catch (e) {
-      console.error(e);
-      return [];
-    }
+    const {data} = await axiosApi.get<TrackFromDb[]>(`/tracks?album=${id}`);
+    if (!data) return [];
+    return data;
   }
 );
 

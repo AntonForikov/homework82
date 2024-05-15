@@ -15,8 +15,8 @@ import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {selectUser} from '../../store/user/userSlice';
 import Button from '@mui/material/Button';
 import axiosApi from '../../axiosApi';
-import {getArtists} from '../../store/artist/artistThunk';
-import {getAlbumArtist, getAlbums} from '../../store/album/albumThunk';
+import {deleteArtist, getArtists} from '../../store/artist/artistThunk';
+import {deleteAlbum, getAlbumArtist, getAlbums} from '../../store/album/albumThunk';
 
 interface Props {
   id: string,
@@ -79,11 +79,11 @@ const CardItem: React.FC<Props> = ({
     const confirmation = confirm('Are you sure?');
     if (confirmation) {
       if (artistCard) {
-        await axiosApi.delete(`/artists/${id}`);
+        await dispatch(deleteArtist(id));
         dispatch(getArtists());
       }
       if (albumCard) {
-        await axiosApi.delete(`/albums/${id}`);
+        await dispatch(deleteAlbum(id));
         if (paramId) {
           await dispatch(getAlbumArtist(paramId));
           await dispatch(getAlbums(paramId));

@@ -40,6 +40,7 @@ const trackSlice = createSlice({
         state.albumInfo.title = trackList[0].album.title;
       }
     }).addCase(getTracks.rejected, (state) => {
+      state.trackList = [];
       state.trackLoading = false;
     });
 

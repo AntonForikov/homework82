@@ -28,3 +28,10 @@ export const getArtists = createAsyncThunk(
     }
   }
 );
+
+export const deleteArtist = createAsyncThunk(
+  'deleteArtist/delete',
+  async (id: string) => {
+    await axiosApi.delete(`/artists/${id}`);
+  }
+);

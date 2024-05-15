@@ -49,3 +49,10 @@ export const getAlbumArtist = createAsyncThunk(
     return data;
   }
 );
+
+export const deleteAlbum = createAsyncThunk(
+  'deleteAlbum/delete',
+  async (id: string) => {
+    await axiosApi.delete(`/albums/${id}`);
+  }
+);
