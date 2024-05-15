@@ -1,9 +1,11 @@
-import {Button, Menu, MenuItem} from '@mui/material';
+import {IconButton, Menu, MenuItem} from '@mui/material';
 import {UserFromDb} from '../../types';
 import React, {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {useAppDispatch} from '../../app/hooks';
 import {logout} from '../../store/user/userThunk';
+import {AccountCircle} from '@mui/icons-material';
+import Avatar from '@mui/material/Avatar';
 
 interface Props {
   user: UserFromDb
@@ -34,12 +36,19 @@ const UserMenu: React.FC<Props> = ({user}) => {
 
   return (
     <>
-      <Button
-        color='inherit'
+      <IconButton
+        size="large"
+        aria-label="account of current user"
+        aria-controls="menu-appbar"
+        aria-haspopup="true"
         onClick={handleClick}
+        color="inherit"
       >
-        Hello, {user.username}
-      </Button>
+        {user.image
+          ? <Avatar alt={user.email} src={`http://localhost:8000/${user.image}`} />
+          : <AccountCircle />
+        }
+      </IconButton>
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}

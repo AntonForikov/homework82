@@ -45,7 +45,7 @@ const Login = () => {
   const googleLoginHandler = async (credential: string) => {
     await dispatch(googleLogin(credential)).unwrap();
     navigate('/');
-  }
+  };
 
   return (
     <>
