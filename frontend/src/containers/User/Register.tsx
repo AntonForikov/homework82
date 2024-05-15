@@ -15,10 +15,13 @@ import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {selectRegisterError, selectRegisterLoading} from '../../store/user/userSlice';
 import {register} from '../../store/user/userThunk';
 import {CircularProgress} from '@mui/material';
+import FileInput from '../../components/InputFile/FileInput';
 
 const initialFields = {
-  username: '',
-  password: ''
+  email: '',
+  password: '',
+  displayName: '',
+  image: '',
 };
 const Register = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +29,7 @@ const Register = () => {
   const registerLoading = useAppSelector(selectRegisterLoading);
   const navigate = useNavigate();
   const [user, setUser] = useState(initialFields);
+  const [fileName, setFileName] = useState('');
 
   const changeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
@@ -37,8 +41,12 @@ const Register = () => {
 
   const submitFormHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    await dispatch(register(user)).unwrap();
-    navigate('/');
+    if (user.displayName[0] === ' ' || user.email[0] === ' ') {
+      alert('Display name and email can not begin from whitespace.');
+    } else {
+      await dispatch(register(user)).unwrap();
+      navigate('/');
+    }
   };
 
   const getFieldError = (fieldName: string) => {
@@ -46,6 +54,22 @@ const Register = () => {
       return error?.errors[fieldName].message;
     } catch {
       return undefined;
+    }
+  };
+
+  const fileInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, files} = e.target;
+
+    if (files) {
+      setUser(prevState => ({
+        ...prevState,
+        [name]: files[0]
+      }));
+    }
+    if (files && files[0]) {
+      setFileName(files[0].name);
+    } else {
+      setFileName('');
     }
   };
 
@@ -70,15 +94,16 @@ const Register = () => {
             </Typography>
             <Box component="form" onSubmit={submitFormHandler} sx={{mt: 1}}>
               <TextField
+                type='email'
                 margin="normal"
                 fullWidth
-                label="Username"
-                name="username"
-                value={user.username}
+                label="Email"
+                name="email"
+                value={user.email}
                 onChange={changeEventHandler}
                 autoFocus
-                error={Boolean(getFieldError('username'))}
-                helperText={getFieldError('username')}
+                error={Boolean(getFieldError('email'))}
+                helperText={getFieldError('email')}
               />
               <TextField
                 margin="normal"
@@ -91,6 +116,24 @@ const Register = () => {
                 error={Boolean(getFieldError('password'))}
                 helperText={getFieldError('password')}
               />
+              <TextField
+                margin="normal"
+                fullWidth
+                name="displayName"
+                value={user.displayName}
+                label="Display Name"
+                onChange={changeEventHandler}
+                error={Boolean(getFieldError('displayName'))}
+                helperText={getFieldError('displayName')}
+              />
+              <Grid item xs>
+                <FileInput
+                  onChange={fileInputChangeHandler}
+                  fileName={fileName}
+                  name="image"
+                  label="Image"
+                />
+              </Grid>
               <Grid container justifyContent="space-between" alignItems="center">
                 <FormControlLabel
                   control={<Checkbox value="remember" color="primary"/>}
