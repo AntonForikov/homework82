@@ -3,7 +3,7 @@ import User from '../models/User';
 import mongoose, {mongo} from 'mongoose';
 import {OAuth2Client} from 'google-auth-library';
 import config from '../config';
-import {imagesUpload} from '../multer';
+import {deleteImage, imagesUpload} from '../multer';
 
 const userRouter = express.Router();
 const client = new OAuth2Client(config.google.clientId);
@@ -22,6 +22,7 @@ userRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
 
     return res.send({message: 'Registered successfully', user});
   } catch (e) {
+    if (req.file?.filename) deleteImage(req.file?.filename);
     if (e instanceof mongoose.Error.ValidationError) return res.status(422).send(e);
     if (e instanceof mongo.MongoServerError && e.code === 11000) return res.status(422).send({error: '"email" should be an unique value.'});
     next(e);

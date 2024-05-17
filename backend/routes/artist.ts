@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import Artist from '../models/Artist';
-import {imagesUpload} from '../multer';
+import {deleteImage, imagesUpload} from '../multer';
 import {ArtistFromDB} from '../types';
 import auth, {Auth} from '../middleware/auth';
 import permit from '../middleware/permit';
@@ -26,6 +26,7 @@ artistRouter.post('/', auth, imagesUpload.single('image'), async (req: Auth, res
 
     return res.send(artist);
   } catch (e) {
+    if (req.file?.filename) deleteImage(req.file?.filename);
     if (e instanceof mongoose.Error.ValidationError) return res.status(422).send(e);
     next(e);
   }

@@ -1,5 +1,5 @@
 import express from 'express';
-import {imagesUpload} from '../multer';
+import {deleteImage, imagesUpload} from '../multer';
 import Album from '../models/Album';
 import {AlbumWithTrackQuantity} from '../types';
 import mongoose from 'mongoose';
@@ -26,6 +26,7 @@ albumRouter.post('/', auth, imagesUpload.single('image'), async (req: Auth, res,
 
     return res.send(album);
   } catch (e) {
+    if (req.file?.filename) deleteImage(req.file?.filename);
     if (e instanceof mongoose.Error.ValidationError) return res.status(422).send(e);
     next(e);
   }
