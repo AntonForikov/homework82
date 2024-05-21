@@ -18,7 +18,6 @@ const TrackHistory: React.FC = () => {
 
 
   useEffect(() => {
-    // if (!user) return navigate('/');
     if (user?.token) dispatch(getUserTracksHistory(user?.token));
   }, [dispatch, user?.token, navigate, user]);
 
@@ -37,7 +36,6 @@ const TrackHistory: React.FC = () => {
               <Box sx={{display: 'flex', alignItems: 'center'}}>
                 {trackHistory.artist.name} - {trackHistory.track.title}
               </Box>
-              {/*<Box>Listen at: {trackHistory.date}</Box>*/}
               <Box>Listen at: {
                 format(new Date(trackHistory.date), 'dd-MM-yyyy, hh:mm:ss')
               }</Box>

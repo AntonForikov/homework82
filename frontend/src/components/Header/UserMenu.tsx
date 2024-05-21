@@ -1,4 +1,4 @@
-import {IconButton, Menu, MenuItem} from '@mui/material';
+import {Grid, IconButton, Menu, MenuItem, Typography} from '@mui/material';
 import {UserFromDb} from '../../types';
 import React, {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
@@ -36,19 +36,22 @@ const UserMenu: React.FC<Props> = ({user}) => {
 
   return (
     <>
-      <IconButton
-        size="large"
-        aria-label="account of current user"
-        aria-controls="menu-appbar"
-        aria-haspopup="true"
-        onClick={handleClick}
-        color="inherit"
-      >
-        {user.image
-          ? <Avatar alt={user.email} src={`http://localhost:8000/${user.image}`} />
-          : <AccountCircle />
-        }
-      </IconButton>
+      <Grid container alignItems='center'>
+        <Typography>{user.displayName}</Typography>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleClick}
+          color="inherit"
+        >
+          {user.image
+            ? <Avatar alt={user.email} src={`http://localhost:8000/${user.image}`} />
+            : <AccountCircle />
+          }
+        </IconButton>
+      </Grid>
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
